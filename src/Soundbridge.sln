@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Library", "Library\Library.vbproj", "{0615F1D2-5090-40FB-A698-95EAED58F17F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Shell", "Shell\Shell.vbproj", "{949DC2B2-D7CA-4D6E-9137-777D853CE856}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1CFFC848-7A3B-4966-9510-124B89EA5272}"
+	ProjectSection(SolutionItems) = preProject
+		..\doc\rcp-spec-2.4.pdf = ..\doc\rcp-spec-2.4.pdf
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0615F1D2-5090-40FB-A698-95EAED58F17F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0615F1D2-5090-40FB-A698-95EAED58F17F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0615F1D2-5090-40FB-A698-95EAED58F17F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0615F1D2-5090-40FB-A698-95EAED58F17F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
