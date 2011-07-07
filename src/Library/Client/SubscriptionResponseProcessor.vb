@@ -16,7 +16,7 @@ Friend Class SubscriptionResponseProcessor
     ''' <param name="client"></param>
     ''' <param name="waitHandle"></param>
     ''' <remarks></remarks>
-    Public Sub New(ByVal client As SoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle, ByVal eventRaiser As Action(Of String))
+    Public Sub New(ByVal client As TcpSoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle, ByVal eventRaiser As Action(Of String))
         MyBase.New(client, command, waitHandle)
         _eventRaiser = eventRaiser
     End Sub

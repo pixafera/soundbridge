@@ -16,7 +16,7 @@ Friend Class SynchronousResponseProcessor
     ''' <param name="client"></param>
     ''' <param name="waitHandle"></param>
     ''' <remarks></remarks>
-    Public Sub New(ByVal client As SoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle)
+    Public Sub New(ByVal client As TcpSoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle)
         MyClass.New(client, command, waitHandle, False)
     End Sub
 
@@ -28,7 +28,7 @@ Friend Class SynchronousResponseProcessor
     ''' <param name="waithandle"></param>
     ''' <param name="isList"></param>
     ''' <remarks></remarks>
-    Public Sub New(ByVal client As SoundbridgeClient, ByVal command As String, ByVal waithandle As EventWaitHandle, ByVal isList As Boolean)
+    Public Sub New(ByVal client As TcpSoundbridgeClient, ByVal command As String, ByVal waithandle As EventWaitHandle, ByVal isList As Boolean)
         MyBase.New(client, command, waithandle)
         _isList = isList
     End Sub

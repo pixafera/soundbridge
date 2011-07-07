@@ -23,4 +23,8 @@
     Public Sub ThrowCommandReturnError(ByVal command As String, ByVal returnValue As String)
         Throw New SoundbridgeCommandException(command, String.Format("The command '{0}' returned '{1}'", command, returnValue))
     End Sub
+
+    Public Sub ThrowObjectNotActive()
+        Throw New SoundbridgeException("Cannot perform the specified action because the object is not part of the active list")
+    End Sub
 End Module

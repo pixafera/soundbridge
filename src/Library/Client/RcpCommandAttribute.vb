@@ -27,6 +27,6 @@ Public MustInherit Class RcpCommandAttribute
     ''' <param name="waitHandle"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public MustOverride Function CreateResponseProcessor(ByVal client As SoundbridgeClient, ByVal waitHandle As EventWaitHandle) As IResponseProcessor
+    Public MustOverride Function CreateResponseProcessor(ByVal client As TcpSoundbridgeClient, ByVal waitHandle As EventWaitHandle) As IResponseProcessor
 
 End Class

@@ -11,11 +11,13 @@
     <AssemblyName>Pixa.Soundbridge.Library</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>Off</OptionStrict>
     <OptionInfer>On</OptionInfer>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,46 +39,69 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\ISoundbridgeClient.vb" />
+    <Compile Include="Client\RcpCommandProgressEventArgs.vb" />
+    <Compile Include="Client\RcpCommandReceivingProgressEventArgs.vb" />
     <Compile Include="ExceptionHelper.vb" />
-    <Compile Include="IrCommand.vb" />
-    <Compile Include="IrCommandStringAttribute.vb" />
-    <Compile Include="IResponseProcessor.vb" />
-    <Compile Include="RcpCommandAttribute.vb" />
-    <Compile Include="RcpSubscriptionCommandAttribute.vb" />
-    <Compile Include="RcpSynchronousCommandAttribute.vb" />
-    <Compile Include="RcpTransactedCommandAttribute.vb" />
-    <Compile Include="ResponseProcessorBase.vb" />
-    <Compile Include="SoundbridgeClientException.vb" />
-    <Compile Include="SoundbridgeCommandException.vb" />
-    <Compile Include="SubscriptionResponseProcessor.vb" />
-    <Compile Include="SynchronousResponseProcessor.vb" />
-    <Compile Include="TransactedResponseProcessor.vb" />
-    <Compile Include="SoundbridgeClient.vb" />
+    <Compile Include="IRCommand.vb" />
+    <Compile Include="IRCommandStringAttribute.vb" />
+    <Compile Include="Client\IResponseProcessor.vb" />
+    <Compile Include="Client\RcpCommandAttribute.vb" />
+    <Compile Include="Client\RcpSubscriptionCommandAttribute.vb" />
+    <Compile Include="Client\RcpSynchronousCommandAttribute.vb" />
+    <Compile Include="Client\RcpTransactedCommandAttribute.vb" />
+    <Compile Include="Client\ResponseProcessorBase.vb" />
+    <Compile Include="Client\SoundbridgeClientException.vb" />
+    <Compile Include="Client\SoundbridgeCommandException.vb" />
+    <Compile Include="Client\SubscriptionResponseProcessor.vb" />
+    <Compile Include="Client\SynchronousResponseProcessor.vb" />
+    <Compile Include="Client\TransactedResponseProcessor.vb" />
+    <Compile Include="Client\TcpSoundbridgeClient.vb" />
     <Compile Include="AssemblyInfo.vb" />
-    <Compile Include="TransactionStatus.vb" />
+    <Compile Include="Client\TransactionStatus.vb" />
+    <Compile Include="ObjectModel\Album.vb" />
+    <Compile Include="ObjectModel\Artist.vb" />
+    <Compile Include="ObjectModel\DisplayUpdateEventArgs.vb" />
+    <Compile Include="ObjectModel\Genre.vb" />
+    <Compile Include="ObjectModel\IRKeyEventArgs.vb" />
+    <Compile Include="ObjectModel\LanguageSetupStep.vb" />
+    <Compile Include="ObjectModel\MediaContainer.vb" />
+    <Compile Include="ObjectModel\MediaObject.vb" />
+    <Compile Include="ObjectModel\MediaServer.vb" />
+    <Compile Include="ObjectModel\MediaServerCollection.vb" />
+    <Compile Include="ObjectModel\NetworkAdapter.vb" />
+    <Compile Include="ObjectModel\Playlist.vb" />
+    <Compile Include="ObjectModel\RegionSetupStep.vb" />
+    <Compile Include="ObjectModel\SetupStep.vb" />
+    <Compile Include="ObjectModel\SetupStepCollection.vb" />
+    <Compile Include="ObjectModel\SetupStepFactory.vb" />
+    <Compile Include="ObjectModel\Song.vb" />
+    <Compile Include="ObjectModel\Soundbridge.vb" />
+    <Compile Include="ObjectModel\SoundbridgeException.vb" />
+    <Compile Include="ObjectModel\SoundbridgeDisplay.vb" />
+    <Compile Include="ObjectModel\SoundbridgeEventArgs.vb" />
+    <Compile Include="ObjectModel\SoundbridgeFactory.vb" />
+    <Compile Include="ObjectModel\SoundbridgeObjectCollection.vb" />
+    <Compile Include="ObjectModel\SoundbridgeObject.vb" />
+    <Compile Include="ObjectModel\SoundbridgeOptions.vb" />
+    <Compile Include="ObjectModel\TermsOfServiceSetupStep.vb" />
+    <Compile Include="ObjectModel\TimeZoneSetupStep.vb" />
+    <Compile Include="ObjectModel\WirelessNetwork.vb" />
+    <Compile Include="ObjectModel\WirelessNetworkCollection.vb" />
+    <Compile Include="ProgressMode.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />

@@ -12,6 +12,8 @@ Public Interface IResponseProcessor
     ''' <remarks></remarks>
     ReadOnly Property Command() As String
 
+    Property IsByteArray() As Boolean
+
     ''' <summary>
     ''' Gets the lines in the response.
     ''' </summary>

@@ -12,7 +12,7 @@ Public NotInheritable Class RcpTransactedCommandAttribute
         MyBase.New(command)
     End Sub
 
-    Public Overrides Function CreateResponseProcessor(ByVal client As SoundbridgeClient, ByVal waitHandle As System.Threading.EventWaitHandle) As IResponseProcessor
+    Public Overrides Function CreateResponseProcessor(ByVal client As TcpSoundbridgeClient, ByVal waitHandle As System.Threading.EventWaitHandle) As IResponseProcessor
         Return New TransactedResponseProcessor(client, Command, waitHandle)
     End Function
 End Class

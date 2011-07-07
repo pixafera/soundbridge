@@ -15,7 +15,7 @@ Friend Class TransactedResponseProcessor
     ''' <param name="client"></param>
     ''' <param name="waitHandle"></param>
     ''' <remarks></remarks>
-    Public Sub New(ByVal client As SoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle)
+    Public Sub New(ByVal client As TcpSoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle)
         MyBase.New(client, command, waitHandle)
     End Sub
 
@@ -53,6 +53,47 @@ Friend Class TransactedResponseProcessor
             WaitHandle.Set()
             Exit Sub
         End If
+
+        If ResponseCount = 0 Then
+            If response = "StatusAwaitingReply" Then
+                Client.OnAwaitingReply(Command)
+                Exit Sub
+            End If
+
+            If response = "StatusSendingRequest" Then
+                Client.OnSendingRequest(Command)
+                Exit Sub
+            End If
+
+            If response.StartsWith("StatusReceivingData") Then
+                If response.Contains(":") Then
+                    response = response.Substring(21)
+
+                    If response.Contains("/") Then
+                        Dim parts As String() = response.Split("/")
+                        Dim progress As Integer
+                        Dim total As Integer
+
+                        If Integer.TryParse(parts(0), progress) And Integer.TryParse(parts(1), total) Then
+                            Client.OnReceivingData(Command, progress, total)
+                        Else
+                            Client.OnReceivingData(Command)
+                        End If
+                    Else
+                        Dim progress As Integer
+
+                        If Integer.TryParse(response, progress) Then
+                            Client.OnReceivingData(Command, progress)
+                        Else
+                            Client.OnReceivingData(Command)
+                        End If
+                    End If
+                Else
+                    Client.OnReceivingData(Command)
+                End If
+            End If
+        End If
+
 
         If response.StartsWith("ListResultSize") Or response = "ListResultEnd" Then Exit Sub
 

@@ -30,7 +30,7 @@ Public NotInheritable Class RcpSynchronousCommandAttribute
     ''' <param name="waitHandle"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Overrides Function CreateResponseProcessor(ByVal client As SoundbridgeClient, ByVal waitHandle As System.Threading.EventWaitHandle) As IResponseProcessor
+    Public Overrides Function CreateResponseProcessor(ByVal client As TcpSoundbridgeClient, ByVal waitHandle As System.Threading.EventWaitHandle) As IResponseProcessor
         Return New SynchronousResponseProcessor(client, Command, waitHandle, _isList)
     End Function
 

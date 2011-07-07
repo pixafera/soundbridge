@@ -8,7 +8,8 @@ Imports System.Threading
 ''' A class for interacting with Soundbridges and other RCP compliant devices.
 ''' </summary>
 ''' <remarks></remarks>
-Public Class SoundbridgeClient
+Public Class TcpSoundbridgeClient
+    Implements Pixa.Soundbridge.Library.ISoundbridgeClient
 
     Private _client As TcpClient
     Private _readTimeout As Integer = 5000
@@ -20,6 +21,15 @@ Public Class SoundbridgeClient
     ''' <remarks></remarks>
     Public Sub New(ByVal localEP As IPEndPoint)
         MyClass.New(New TcpClient(localEP))
+    End Sub
+
+    ''' <summary>
+    ''' Creates a new SoundbridgeClient connect to the specified host.
+    ''' </summary>
+    ''' <param name="hostname"></param>
+    ''' <remarks></remarks>
+    Public Sub New(ByVal hostname As String)
+        MyClass.New(hostname, 5555)
     End Sub
 
     ''' <summary>
@@ -52,8 +62,8 @@ Public Class SoundbridgeClient
             _writer = New StreamWriter(stream)
 
             'Start the reading thread
-            Dim d As New Action(AddressOf ReadFromClient)
-            d.BeginInvoke(Nothing, Nothing)
+            Dim t As New Thread(AddressOf ReadFromClient)
+            t.Start()
         Catch
             _client.Close()
             Throw
@@ -99,6 +109,11 @@ Public Class SoundbridgeClient
                         processedResponse = parts(1).Trim
                     Else
                         processedResponse = ""
+                    End If
+
+                    If processedResponse.StartsWith("data bytes: ") Then
+                        processedResponse = _reader.ReadLine
+                        processor.IsByteArray = True
                     End If
 
                     Try
@@ -197,35 +212,159 @@ Public Class SoundbridgeClient
     End Function
 #End Region
 
+#Region " Progress "
+    Public Event AwaitingReply As EventHandler(Of RcpCommandProgressEventArgs)
+    Public Event ReceivingData As EventHandler(Of RcpCommandReceivingProgressEventArgs)
+    Public Event SendingRequest As EventHandler(Of RcpCommandProgressEventArgs)
+
+    Protected Overridable Sub OnAwaitingReply(ByVal e As RcpCommandProgressEventArgs)
+        RaiseEvent AwaitingReply(Me, e)
+    End Sub
+
+    Friend Sub OnAwaitingReply(ByVal command As String)
+        OnAwaitingReply(New RcpCommandProgressEventArgs(command))
+    End Sub
+
+    Protected Overridable Sub OnReceivingData(ByVal e As RcpCommandReceivingProgressEventArgs)
+        RaiseEvent ReceivingData(Me, e)
+    End Sub
+
+    Friend Sub OnReceivingData(ByVal command As String)
+        OnReceivingData(New RcpCommandReceivingProgressEventArgs(command))
+    End Sub
+
+    Friend Sub OnReceivingData(ByVal command As String, ByVal progress As Integer)
+        OnReceivingData(New RcpCommandReceivingProgressEventArgs(command, progress))
+    End Sub
+
+    Friend Sub OnReceivingData(ByVal command As String, ByVal progress As Integer, ByVal total As Integer)
+        OnReceivingData(New RcpCommandReceivingProgressEventArgs(command, progress, total))
+    End Sub
+
+    Protected Overridable Sub OnSendingRequest(ByVal e As RcpCommandProgressEventArgs)
+        RaiseEvent SendingRequest(Me, e)
+    End Sub
+
+    Friend Sub OnSendingRequest(ByVal command As String)
+        OnSendingRequest(New RcpCommandProgressEventArgs(command))
+    End Sub
+#End Region
+
 #Region " Methods "
 
-#Region " IR Demod/Dispatch "
-    Private Shared _irCommandTranslations As Dictionary(Of IrCommand, String)
-    Private Shared _irCommandTranslationsLock As New Object
-
-    Public Shared Function GetIrCommandTranslation(ByVal command As IrCommand) As String
-        SyncLock _irCommandTranslationsLock
-            If _irCommandTranslations Is Nothing Then
-                Dim i As IrCommand
-
-                _irCommandTranslations = New Dictionary(Of IrCommand, String)
-
-
-                For Each f As FieldInfo In GetType(IrCommand).GetFields
-                    Dim atts As IrCommandStringAttribute() = f.GetCustomAttributes(GetType(IrCommandStringAttribute), False)
-
-                    If atts.Length = 1 Then
-                        _irCommandTranslations.Add(f.GetValue(i), atts(0).CommandString)
-                    End If
-                Next
-            End If
-
-            Return _irCommandTranslations(command)
-        End SyncLock
+#Region " Protocol Control "
+    <RcpSynchronousCommand("CancelTransaction")> _
+    Public Function CancelTransaction(ByVal command As String) As String
+        Dim p As IResponseProcessor = Invoke("CancelTransaction", command)
+        Return p.Response(0)
     End Function
 
+    <RcpSynchronousCommand("DeleteList")> _
+    Public Function DeleteList() As String
+        Dim p As IResponseProcessor = Invoke("DeleteList")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("GetProgressMode")> _
+    Public Function GetProgressMode() As ProgressMode
+        Dim p As IResponseProcessor = Invoke("GetProgressMode")
+        If p.Response(0) = "off" Then
+            Return ProgressMode.Off
+        Else
+            Return ProgressMode.Verbose
+        End If
+    End Function
+
+    <RcpSynchronousCommand("SetProgressMode")> _
+    Public Function SetProgressMode(ByVal mode As ProgressMode) As String
+        Dim p As IResponseProcessor = Invoke("SetProgressMode", If(mode = ProgressMode.Off, "off", "verbose"))
+        Return p.Response(0)
+    End Function
+#End Region
+
+#Region " Host Configuration "
+    <RcpSynchronousCommand("GetInitialSetupComplete")> _
+    Public Function GetInitialSetupComplete() As String
+        Dim p As IResponseProcessor = Invoke("GetInitialSetupComplete")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("SetInitialSetupComplete")> _
+    Public Function SetInitialSetupComplete() As String
+        Dim p As IResponseProcessor = Invoke("SetInitialSetupComplete")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("GetRequiredSetupSteps")> _
+    Public Function GetRequiredSetupSteps() As String()
+        Dim p As IResponseProcessor = Invoke("GetRequiredSetupSteps")
+        Return p.Response
+    End Function
+
+    <RcpSynchronousCommand("ListLanguages")> _
+    Public Function ListLanguages() As String()
+        Dim p As IResponseProcessor = Invoke("ListLanguages")
+        Return p.Response
+    End Function
+
+    <RcpSynchronousCommand("GetLanguage")> _
+    Public Function GetLanguage() As String
+        Dim p As IResponseProcessor = Invoke("GetLanguage")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("SetLanguage")> _
+    Public Function SetLanguage(ByVal value As String) As String
+        Dim p As IResponseProcessor = Invoke("SetLanguage", value)
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("ListRegions")> _
+    Public Function ListRegions() As String()
+        Dim p As IResponseProcessor = Invoke("ListRegions")
+        Return p.Response
+    End Function
+
+    <RcpSynchronousCommand("SetRegion")> _
+    Public Function SetRegion(ByVal index As Integer) As String
+        Dim p As IResponseProcessor = Invoke("SetRegion", index)
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("GetTermsOfServiceUrl")> _
+    Public Function GetTermsOfServiceUrl() As String
+        Dim p As IResponseProcessor = Invoke("GetTermsOfServiceUrl")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("AcceptTermsOfService")> _
+    Public Function AcceptTermsOfService() As String
+        Dim p As IResponseProcessor = Invoke("AcceptTermsOfService")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("ListTimeZones")> _
+    Public Function ListTimeZones() As String()
+        Dim p As IResponseProcessor = Invoke("ListTimeZones")
+        Return p.Response
+    End Function
+
+    <RcpSynchronousCommand("GetTimeZone")> _
+    Public Function GetTimeZone() As String
+        Dim p As IResponseProcessor = Invoke("GetTimeZone")
+        Return p.Response(0)
+    End Function
+
+    <RcpSynchronousCommand("SetTimeZone")> _
+    Public Function SetTimeZone(ByVal index As Integer) As String
+        Dim p As IResponseProcessor = Invoke("SetTimeZone", index)
+        Return p.Response(0)
+    End Function
+#End Region
+
+#Region " IR Demod/Dispatch "
     <RcpSynchronousCommand("IrDispatchCommand")> _
-    Public Function IrDispatchCommand(ByVal command As IrCommand) As String
+    Public Function IrDispatchCommand(ByVal command As IRCommand) As String
         Dim p As IResponseProcessor = Invoke("IrDispatchCommand", GetIrCommandTranslation(command))
 
         Return p.Response(0)
@@ -294,5 +433,7 @@ Public Class SoundbridgeClient
         Return p.Response(0)
     End Function
 #End Region
+
 #End Region
+
 End Class

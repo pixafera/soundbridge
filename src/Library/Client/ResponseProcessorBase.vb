@@ -13,14 +13,14 @@ Public MustInherit Class ResponseProcessorBase
     ''' <param name="client"></param>
     ''' <param name="waitHandle"></param>
     ''' <remarks></remarks>
-    Public Sub New(ByVal client As SoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle)
+    Public Sub New(ByVal client As ISoundbridgeClient, ByVal command As String, ByVal waitHandle As EventWaitHandle)
         _client = client
         _command = command
         _waitHandle = waitHandle
     End Sub
 
 #Region " Client "
-    Private _client As SoundbridgeClient
+    Private _client As TcpSoundbridgeClient
 
     ''' <summary>
     ''' Gets the client this ResponseProcessorBase is associated with.
@@ -28,7 +28,7 @@ Public MustInherit Class ResponseProcessorBase
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public ReadOnly Property Client() As SoundbridgeClient
+    Public ReadOnly Property Client() As TcpSoundbridgeClient
         Get
             Return _client
         End Get
@@ -49,20 +49,30 @@ Public MustInherit Class ResponseProcessorBase
     Private _waitHandle As EventWaitHandle
 
     ''' <summary>
-    ''' Gets the lines in the response.
+    ''' Gets the EventWaitHandle this ResponseProcessorBase will signal when the entire response has been received.
     ''' </summary>
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public ReadOnly Property Response() As String() Implements IResponseProcessor.Response
+    Protected ReadOnly Property WaitHandle() As EventWaitHandle
         Get
-            Return _response.ToArray
+            Return _waitHandle
         End Get
     End Property
 #End Region
 
 #Region " Response "
     Private _response As New List(Of String)
+    Private _byteResponse As Boolean
+
+    Public Property IsByteArray() As Boolean Implements IResponseProcessor.IsByteArray
+        Get
+            Return _byteResponse
+        End Get
+        Friend Set(ByVal value As Boolean)
+            _byteResponse = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' Gets the number of lines in the response.
@@ -77,14 +87,14 @@ Public MustInherit Class ResponseProcessorBase
     End Property
 
     ''' <summary>
-    ''' Gets the EventWaitHandle this ResponseProcessorBase will signal when the entire response has been received.
+    ''' Gets the lines in the response.
     ''' </summary>
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Protected ReadOnly Property WaitHandle() As EventWaitHandle
+    Public ReadOnly Property Response() As String() Implements IResponseProcessor.Response
         Get
-            Return _waitHandle
+            Return _response.ToArray
         End Get
     End Property
 
@@ -112,5 +122,4 @@ Public MustInherit Class ResponseProcessorBase
     ''' <remarks>This method will be called on the thread that called the public method on <see cref="SoundbridgeClient"/>.</remarks>
     Public MustOverride Sub PostProcess() Implements IResponseProcessor.PostProcess
 #End Region
-
 End Class

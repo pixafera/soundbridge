@@ -1,5 +1,5 @@
 ﻿<AttributeUsage(AttributeTargets.Field, AllowMultiple:=False)> _
-Public Class IrCommandStringAttribute
+Public Class IRCommandStringAttribute
     Inherits System.Attribute
 
     Private _commandString As String
