@@ -58,7 +58,7 @@
 
     Function GetVisualizer(ByVal verbose As Boolean) As String
     Function SetVisualizer(ByVal name As String) As String
-    <Obsolete("Use GetVisualizerMode instead")> Function VisualizerMode(ByVal mode As String) As String
+    <Obsolete("Use SetVisualizerMode instead")> Function VisualizerMode(ByVal mode As String) As String
     Function GetVisualizerMode() As String
     Function SetVisualizerMode(ByVal mode As String) As String
     Function ListVisualizers(ByVal verbose As Boolean) As String()
@@ -105,7 +105,7 @@
     Function ListContainerContents() As String()
     Function GetCurrentContainerPath() As String
     Function ContainerEnter(ByVal index As Integer) As String
-    Function ContainerExit()
+    Function ContainerExit() As String
     Function SearchSongs(ByVal searchString As String) As String()
     Function SearchArtists(ByVal searchString As String) As String()
     Function SearchAlbums(ByVal searchString As String) As String()
@@ -124,17 +124,58 @@
 #End Region
 
 #Region " Getting Detailed Song Info "
-    Function GetSongInfo(ByVal index As Integer) As String
-    Function GetCurrentSongInfo() As String
+    Function GetSongInfo(ByVal index As Integer) As String()
+    Function GetCurrentSongInfo() As String()
+#End Region
+
+#Region " Managing the Now Playing (ad-hoc) Playlist "
+    Function NowPlayingClear() As String
+    Function ListNowPlayingQueue() As String()
 #End Region
 
 #Region " Initiating Media Playback "
+    Function PlayIndex(ByVal index As Integer) As String
+    Function NowPlayingInsert(ByVal songIndex As Integer, ByVal insertIndex As Integer) As String
+    Function NowPlayingRemoveAt(ByVal index As Integer) As String
     Function QueueAndPlay(ByVal songIndex As Integer) As String
+    Function QueueAndPlayOne(ByVal index As Integer) As String
+
 #End Region
 
 #Region " Transport "
+    Function Play() As String
+    Function Pause() As String
+    Function PlayPause() As String
     Function [Next]() As String
+    Function Previous() As String
+    Function [Stop]() As String
     Function Shuffle(ByVal value As Boolean) As String
+    Function Repeat(ByVal mode As String) As String
+    Function GetTransportState() As String
+    Function GetElapsedTime() As String
+    Function GetTotalTime() As String
+    Function GetCurrentNowPlayingIndex() As String
+#End Region
+
+#Region " Volume Functions "
+    Function GetVolume() As String
+    Function SetVolume(ByVal level As String) As String
+#End Region
+
+#Region " Commands For Using Presets"
+    Function ListPresets() As String()
+    Function GetPresetInfo(ByVal id As String) As String()
+    Function PlayPreset(ByVal id As String) As String
+    Function SetPreset(ByVal id As String) As String
+    Function GetWorkingSongInfo() As String()
+    Function SetWorkingSongInfo(ByVal name As String, ByVal value As String) As String
+    Function ClearWorkingSong() As String
+#End Region
+
+#Region " Power State Commands "
+    Function GetPowerState() As String
+    Function SetPowerState(ByVal value As String, ByVal reconnect As Boolean) As String
 #End Region
 #End Region
+
 End Interface

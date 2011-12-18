@@ -26,13 +26,13 @@ Public Interface IResponseProcessor
     ''' Processes a response line from the Soundbridge or other RCP compliant device.
     ''' </summary>
     ''' <param name="response"></param>
-    ''' <remarks>This method will be called on the <see cref="SoundbridgeClient"/>'s receiving thread.</remarks>
+    ''' <remarks>This method will be called on the <see cref="TcpSoundbridgeClient"/>'s receiving thread.</remarks>
     Sub Process(ByVal response As String)
 
     ''' <summary>
     ''' Checks the response for timeouts and error values.
     ''' </summary>
-    ''' <remarks>This method will be called on the thread that called the public method on <see cref="SoundbridgeClient"/>.</remarks>
+    ''' <remarks>This method will be called on the thread that called the public method on <see cref="TcpSoundbridgeClient"/>.</remarks>
     Sub PostProcess()
 
 End Interface

@@ -119,7 +119,7 @@ Public MustInherit Class ResponseProcessorBase
     ''' <summary>
     ''' Checks the response for timeouts and error values.
     ''' </summary>
-    ''' <remarks>This method will be called on the thread that called the public method on <see cref="SoundbridgeClient"/>.</remarks>
+    ''' <remarks>This method will be called on the thread that called the public method on <see cref="TcpSoundbridgeClient"/>.</remarks>
     Public MustOverride Sub PostProcess() Implements IResponseProcessor.PostProcess
 #End Region
 End Class

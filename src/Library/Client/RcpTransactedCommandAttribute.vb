@@ -12,6 +12,11 @@ Public NotInheritable Class RcpTransactedCommandAttribute
         MyBase.New(command)
     End Sub
 
+    'TODO: Implement IsList
+    Public Sub New(ByVal command As String, ByVal isList As Boolean)
+        MyClass.New(command)
+    End Sub
+
     Public Overrides Function CreateResponseProcessor(ByVal client As TcpSoundbridgeClient, ByVal waitHandle As System.Threading.EventWaitHandle) As IResponseProcessor
         Return New TransactedResponseProcessor(client, Command, waitHandle)
     End Function
