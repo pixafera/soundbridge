@@ -627,26 +627,26 @@ Public Class TcpSoundbridgeClient
     Public Event IRKeyDown(ByVal data As String) Implements ISoundbridgeClient.IRKeyDown
     Public Event IRKeyUp(ByVal data As String) Implements ISoundbridgeClient.IRKeyUp
 
-    <RcpSynchronousCommand("IrDispatchCommand")> _
+    <RcpSynchronousCommand("IRDispatchCommand")> _
     Public Function IRDispatchCommand(ByVal command As String) As String Implements ISoundbridgeClient.IRDispatchCommand
-        Dim p As IResponseProcessor = Invoke("IrDispatchCommand", command)
+        Dim p As IResponseProcessor = Invoke("IRDispatchCommand", command)
         Return p.Response(0)
     End Function
 
-    <RcpSubscriptionCommand("IrDemodSubscribe", "OnIRKeyPressed")> _
+    <RcpSubscriptionCommand("IRDemodSubscribe", "OnIRKeyPressed")> _
     Public Function IRDemodSubscribe(ByVal updown As Boolean) As String Implements ISoundbridgeClient.IRDemodSubscribe
         Dim p As IResponseProcessor
 
         If updown Then
-            p = Invoke("IrDemodSubscribe", "updown")
+            p = Invoke("IRDemodSubscribe", "updown")
         Else
-            p = Invoke("IrDemodSubscribe")
+            p = Invoke("IRDemodSubscribe")
         End If
 
         Return p.Response(0)
     End Function
 
-    <RcpSynchronousCommand("IrDemodUnsubscribe")> _
+    <RcpSynchronousCommand("IRDemodUnsubscribe")> _
     Public Function IRDemodUnsubscribe() As String Implements ISoundbridgeClient.IRDemodUnsubscribe
         Dim p As IResponseProcessor = Invoke("IRDemodUnsubscribe")
         Return p.Response(0)
