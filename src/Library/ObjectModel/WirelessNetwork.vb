@@ -1,8 +1,6 @@
 ﻿Public Class WirelessNetwork
-    Inherits Pixa.Soundbridge.Library.SoundbridgeObject
+   Inherits Pixa.Soundbridge.Library.SoundbridgeListObject
 
-    Private _index As Integer
-    Private _name As String
     Private _connected As Boolean
     Private _selected As Boolean
 
@@ -50,24 +48,12 @@
 #End Region
 
     Friend Sub New(ByVal client As ISoundbridgeClient, ByVal index As Integer, ByVal name As String, ByVal connected As Boolean, ByVal selected As Boolean)
-        MyBase.New(client)
+      MyBase.New(client, index, name)
     End Sub
 
     Public ReadOnly Property Connected() As Boolean
         Get
             Return _connected
-        End Get
-    End Property
-
-    Public ReadOnly Property Index() As Integer
-        Get
-            Return _index
-        End Get
-    End Property
-
-    Public ReadOnly Property Name() As String
-        Get
-            Return _name
         End Get
     End Property
 

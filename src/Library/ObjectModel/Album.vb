@@ -4,14 +4,14 @@
     Private _artist As Artist
     Private _songs As SongCollection
 
-    Friend Sub New(ByVal server As MediaServer, ByVal name As String)
-        MyClass.New(server, name, Nothing)
-    End Sub
+   Friend Sub New(ByVal server As MediaServer, ByVal index As Integer, ByVal name As String)
+      MyClass.New(server, index, name, Nothing)
+   End Sub
 
-    Friend Sub New(ByVal server As MediaServer, ByVal name As String, ByVal artist As Artist)
-        MyBase.New(server, name)
-        _artist = artist
-    End Sub
+   Friend Sub New(ByVal server As MediaServer, ByVal index As Integer, ByVal name As String, ByVal artist As Artist)
+      MyBase.New(server, index, name)
+      _artist = artist
+   End Sub
 
     Public ReadOnly Property Songs() As SongCollection
         Get

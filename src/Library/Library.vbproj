@@ -33,7 +33,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\Library\</OutputPath>
     <DocumentationFile>Pixa.Soundbridge.Library.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -77,7 +77,6 @@
     <Compile Include="ObjectModel\MediaContainer.vb" />
     <Compile Include="ObjectModel\MediaObject.vb" />
     <Compile Include="ObjectModel\MediaServer.vb" />
-    <Compile Include="ObjectModel\MediaServerCollection.vb" />
     <Compile Include="ObjectModel\NetworkAdapter.vb" />
     <Compile Include="ObjectModel\Playlist.vb" />
     <Compile Include="ObjectModel\RegionSetupStep.vb" />
@@ -90,6 +89,8 @@
     <Compile Include="ObjectModel\SoundbridgeDisplay.vb" />
     <Compile Include="ObjectModel\SoundbridgeEventArgs.vb" />
     <Compile Include="ObjectModel\SoundbridgeFactory.vb" />
+    <Compile Include="ObjectModel\SoundbridgeListObject.vb" />
+    <Compile Include="ObjectModel\SoundbridgeCache.vb" />
     <Compile Include="ObjectModel\SoundbridgeObjectCollection.vb" />
     <Compile Include="ObjectModel\SoundbridgeObject.vb" />
     <Compile Include="ObjectModel\SoundbridgeOptions.vb" />
@@ -97,10 +98,8 @@
     <Compile Include="ObjectModel\TimeZoneSetupStep.vb" />
     <Compile Include="ObjectModel\WirelessNetwork.vb" />
     <Compile Include="ObjectModel\WirelessNetworkCollection.vb" />
+    <Compile Include="PowerState.vb" />
     <Compile Include="ProgressMode.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />
@@ -114,6 +113,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy /Y *.dll /B + *.pdb /B + *.xml /A ..\..\..\src\Scripting\</PostBuildEvent>
+    <PostBuildEvent>copy /Y *.dll ..\..\..\src\Scripting\
+copy /Y *.pdb ..\..\..\src\Scripting\
+copy /Y *.xml ..\..\..\src\Scripting\</PostBuildEvent>
   </PropertyGroup>
 </Project>

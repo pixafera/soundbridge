@@ -7,10 +7,17 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Shell", "Shell\Shell.vbproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1CFFC848-7A3B-4966-9510-124B89EA5272}"
 	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		..\doc\rcp-spec-2.4.pdf = ..\doc\rcp-spec-2.4.pdf
+		Soundbridge.vsmdi = Soundbridge.vsmdi
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Test", "Test\Test.vbproj", "{6534F39B-3745-4051-8282-A07F624CB8D7}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Soundbridge.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -24,6 +31,10 @@ Global
 		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{949DC2B2-D7CA-4D6E-9137-777D853CE856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6534F39B-3745-4051-8282-A07F624CB8D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6534F39B-3745-4051-8282-A07F624CB8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6534F39B-3745-4051-8282-A07F624CB8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6534F39B-3745-4051-8282-A07F624CB8D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
