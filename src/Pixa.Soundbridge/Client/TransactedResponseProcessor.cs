@@ -1,14 +1,12 @@
 ﻿using System.Threading;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
 
     /// <summary>
     /// Processes responses for transacted RCP methods.
     /// </summary>
     /// <remarks></remarks>
-    internal class TransactedResponseProcessor : ResponseProcessorBase
-    {
+    internal class TransactedResponseProcessor : ResponseProcessorBase {
         private TransactionStatus _status = TransactionStatus.Pending;
 
         /// <summary>
@@ -17,8 +15,7 @@ namespace Pixa.Soundbridge.Client
         /// <param name="client"></param>
         /// <param name="waitHandle"></param>
         /// <remarks></remarks>
-        public TransactedResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle) : base(client, command, waitHandle)
-        {
+        public TransactedResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle) : base(client, command, waitHandle) {
         }
 
         /// <summary>
@@ -27,10 +24,8 @@ namespace Pixa.Soundbridge.Client
         /// <value></value>
         /// <returns></returns>
         /// <remarks>If the transaction was not initiated, this usually indicates an error.</remarks>
-        public TransactionStatus Status
-        {
-            get
-            {
+        public TransactionStatus Status {
+            get {
                 return _status;
             }
         }
@@ -40,76 +35,56 @@ namespace Pixa.Soundbridge.Client
         /// </summary>
         /// <param name="response"></param>
         /// <remarks></remarks>
-        public override void Process(string response)
-        {
-            if (response == "TransactionInitiated")
-            {
+        public override void Process(string response) {
+            if (response == "TransactionInitiated") {
                 _status = TransactionStatus.Initiated;
                 return;
             }
 
-            if (response == "TransactionComplete")
-            {
+            if (response == "TransactionComplete") {
                 _status = TransactionStatus.Complete;
                 WaitHandle.Set();
                 return;
             }
 
-            if (response == "TransactionCanceled")
-            {
+            if (response == "TransactionCanceled") {
                 _status = TransactionStatus.Canceled;
                 WaitHandle.Set();
                 return;
             }
 
-            if (ResponseCount == 0)
-            {
-                if (response == "StatusAwaitingReply")
-                {
+            if (ResponseCount == 0) {
+                if (response == "StatusAwaitingReply") {
                     Client.OnAwaitingReply(Command);
                     return;
                 }
 
-                if (response == "StatusSendingRequest")
-                {
+                if (response == "StatusSendingRequest") {
                     Client.OnSendingRequest(Command);
                     return;
                 }
 
-                if (response.StartsWith("StatusReceivingData"))
-                {
-                    if (response.Contains(":"))
-                    {
+                if (response.StartsWith("StatusReceivingData")) {
+                    if (response.Contains(":")) {
                         response = response.Substring(21);
-                        if (response.Contains("/"))
-                        {
+                        if (response.Contains("/")) {
                             var parts = response.Split('/');
                             int progress;
                             int total;
-                            if (int.TryParse(parts[0], out progress) & int.TryParse(parts[1], out total))
-                            {
+                            if (int.TryParse(parts[0], out progress) & int.TryParse(parts[1], out total)) {
                                 Client.OnReceivingData(Command, progress, total);
-                            }
-                            else
-                            {
+                            } else {
                                 Client.OnReceivingData(Command);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             int progress;
-                            if (int.TryParse(response, out progress))
-                            {
+                            if (int.TryParse(response, out progress)) {
                                 Client.OnReceivingData(Command, progress);
-                            }
-                            else
-                            {
+                            } else {
                                 Client.OnReceivingData(Command);
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Client.OnReceivingData(Command);
                     }
                 }
@@ -118,15 +93,13 @@ namespace Pixa.Soundbridge.Client
             if (response.StartsWith("ListResultSize") | response == "ListResultEnd")
                 return;
             AddResponse(response);
-            if (_status == TransactionStatus.Pending)
-            {
+            if (_status == TransactionStatus.Pending) {
                 WaitHandle.Set();
                 return;
             }
         }
 
-        public override void PostProcess()
-        {
+        public override void PostProcess() {
             if (_status != TransactionStatus.Complete & _status != TransactionStatus.Canceled & ResponseCount == 0)
                 ExceptionHelper.ThrowCommandTimeout(Command);
         }

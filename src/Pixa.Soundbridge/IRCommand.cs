@@ -1,7 +1,5 @@
-﻿namespace Pixa.Soundbridge
-{
-    public enum IRCommand
-    {
+﻿namespace Pixa.Soundbridge {
+    public enum IRCommand {
         [IRCommandString("CK_NORTH")]
         North,
         [IRCommandString("CK_SOUTH")]

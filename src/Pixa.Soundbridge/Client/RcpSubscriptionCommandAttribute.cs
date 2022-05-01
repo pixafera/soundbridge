@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
 
     /// <summary>
     /// Contains metadata about Subscription RCP Commands.
     /// </summary>
     /// <remarks></remarks>
-    public sealed class RcpSubscriptionCommandAttribute : RcpCommandAttribute
-    {
+    public sealed class RcpSubscriptionCommandAttribute : RcpCommandAttribute {
         private string _eventRaiserMethodName;
 
         /// <summary>
@@ -19,8 +17,7 @@ namespace Pixa.Soundbridge.Client
         /// soundbridge.</param>
         /// <param name="eventRaiserMethodName">The name of the method to be called
         /// when a subscription notification is received.</param>
-        public RcpSubscriptionCommandAttribute(string command, string eventRaiserMethodName) : base(command)
-        {
+        public RcpSubscriptionCommandAttribute(string command, string eventRaiserMethodName) : base(command) {
             _eventRaiserMethodName = eventRaiserMethodName;
         }
 
@@ -28,10 +25,8 @@ namespace Pixa.Soundbridge.Client
         /// Gets the name of the method to be called when a subscription notification
         /// is reeived.
         /// </summary>
-        public string EventRaiserMethodName
-        {
-            get
-            {
+        public string EventRaiserMethodName {
+            get {
                 return _eventRaiserMethodName;
             }
         }
@@ -46,15 +41,11 @@ namespace Pixa.Soundbridge.Client
         /// a response is received.</param>
         /// <returns></returns>
         /// <remarks></remarks>
-        public override IResponseProcessor CreateResponseProcessor(TcpSoundbridgeClient client, EventWaitHandle waitHandle)
-        {
+        public override IResponseProcessor CreateResponseProcessor(TcpSoundbridgeClient client, EventWaitHandle waitHandle) {
             Action<string> d;
-            try
-            {
+            try {
                 d = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), client, EventRaiserMethodName);
-            }
-            catch (ArgumentException aex)
-            {
+            } catch (ArgumentException aex) {
                 throw new MissingMethodException(string.Format("The method {0} could not be found on {1}", EventRaiserMethodName, client.GetType().FullName));
             }
 

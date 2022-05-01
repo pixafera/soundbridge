@@ -1,7 +1,5 @@
-﻿namespace Pixa.Soundbridge
-{
-    public enum BootMode
-    {
+﻿namespace Pixa.Soundbridge {
+    public enum BootMode {
         LastState,
         Standby,
         LastSource,

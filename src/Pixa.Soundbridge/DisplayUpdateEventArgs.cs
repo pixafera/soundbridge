@@ -1,18 +1,13 @@
-﻿namespace Pixa.Soundbridge
-{
-    public class DisplayUpdateEventArgs : SoundbridgeEventArgs
-    {
+﻿namespace Pixa.Soundbridge {
+    public class DisplayUpdateEventArgs : SoundbridgeEventArgs {
         private int _change;
 
-        public DisplayUpdateEventArgs(Soundbridge soundbridge, int change) : base(soundbridge)
-        {
+        public DisplayUpdateEventArgs(Soundbridge soundbridge, int change) : base(soundbridge) {
             _change = change;
         }
 
-        public int Change
-        {
-            get
-            {
+        public int Change {
+            get {
                 return _change;
             }
         }

@@ -5,10 +5,9 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1CFFC848-7A3B-4966-9510-124B89EA5272}"
 	ProjectSection(SolutionItems) = preProject
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		.editorconfig = .editorconfig
 		doc\rcp-spec-2.4.pdf = doc\rcp-spec-2.4.pdf
 		Readme.md = Readme.md
-		Soundbridge.vsmdi = Soundbridge.vsmdi
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixa.Soundbridge", "src\Pixa.Soundbridge\Pixa.Soundbridge.csproj", "{9A7B8C9A-61E7-41BE-8134-AB2EF15AEB32}"

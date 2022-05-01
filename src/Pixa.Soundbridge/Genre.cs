@@ -1,19 +1,13 @@
-﻿namespace Pixa.Soundbridge
-{
-    public class Genre : MediaObject
-    {
+﻿namespace Pixa.Soundbridge {
+    public class Genre : MediaObject {
         private SongCollection _songs;
 
-        internal Genre(MediaServer server, int index, string name) : base(server, index, name)
-        {
+        internal Genre(MediaServer server, int index, string name) : base(server, index, name) {
         }
 
-        public SongCollection Songs
-        {
-            get
-            {
-                if (_songs is null || !_songs.IsActive)
-                {
+        public SongCollection Songs {
+            get {
+                if (_songs is null || !_songs.IsActive) {
                     _songs = new SongCollection(Server.Soundbridge);
                     string r = Client.SetBrowseFilterGenre(Name);
                     if (r != "OK")

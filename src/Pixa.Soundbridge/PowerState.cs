@@ -1,7 +1,5 @@
-﻿namespace Pixa.Soundbridge
-{
-    public enum PowerState
-    {
+﻿namespace Pixa.Soundbridge {
+    public enum PowerState {
         Standby,
         On
     }

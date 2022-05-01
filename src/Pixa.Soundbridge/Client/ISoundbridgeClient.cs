@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
 
     public delegate void DisplayUpdateEventHandler(string data);
 
@@ -13,8 +12,7 @@ namespace Pixa.Soundbridge.Client
     /// Defines the methods and events that a Soundbridge is capable of supporting.
     /// </summary>
     /// <remarks></remarks>
-    public interface ISoundbridgeClient
-    {
+    public interface ISoundbridgeClient {
 
         #region  Progress 
         /// <summary>

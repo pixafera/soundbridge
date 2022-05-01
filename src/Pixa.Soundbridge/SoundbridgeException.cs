@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Pixa.Soundbridge
-{
+namespace Pixa.Soundbridge {
     [Serializable()]
-    public class SoundbridgeException : Exception
-    {
-        public SoundbridgeException()
-        {
+    public class SoundbridgeException : Exception {
+        public SoundbridgeException() {
         }
 
-        public SoundbridgeException(string message) : base(message)
-        {
+        public SoundbridgeException(string message) : base(message) {
         }
 
-        public SoundbridgeException(string message, Exception innerException) : base(message, innerException)
-        {
+        public SoundbridgeException(string message, Exception innerException) : base(message, innerException) {
         }
 
-        protected SoundbridgeException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
+        protected SoundbridgeException(SerializationInfo info, StreamingContext context) : base(info, context) {
         }
     }
 }

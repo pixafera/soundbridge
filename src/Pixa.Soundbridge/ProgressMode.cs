@@ -1,7 +1,5 @@
-﻿namespace Pixa.Soundbridge
-{
-    public enum ProgressMode
-    {
+﻿namespace Pixa.Soundbridge {
+    public enum ProgressMode {
         Verbose,
         Off
     }

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
 
     /// <summary>
     /// Processes responses for subscription RCP methods.
     /// </summary>
     /// <remarks></remarks>
-    internal class SubscriptionResponseProcessor : ResponseProcessorBase
-    {
+    internal class SubscriptionResponseProcessor : ResponseProcessorBase {
         private Action<string> _eventRaiser;
         private bool _receivedSubAck;
 
@@ -19,8 +17,7 @@ namespace Pixa.Soundbridge.Client
         /// <param name="client"></param>
         /// <param name="waitHandle"></param>
         /// <remarks></remarks>
-        public SubscriptionResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle, Action<string> eventRaiser) : base(client, command, waitHandle)
-        {
+        public SubscriptionResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle, Action<string> eventRaiser) : base(client, command, waitHandle) {
             _eventRaiser = eventRaiser;
         }
 
@@ -29,22 +26,17 @@ namespace Pixa.Soundbridge.Client
         /// </summary>
         /// <param name="response"></param>
         /// <remarks></remarks>
-        public override void Process(string response)
-        {
-            if (_receivedSubAck)
-            {
+        public override void Process(string response) {
+            if (_receivedSubAck) {
                 _eventRaiser(response);
-            }
-            else
-            {
+            } else {
                 AddResponse(response);
                 _receivedSubAck = true;
                 WaitHandle.Set();
             }
         }
 
-        public override void PostProcess()
-        {
+        public override void PostProcess() {
             if (Response.Length == 0)
                 ExceptionHelper.ThrowCommandTimeout(Command);
         }

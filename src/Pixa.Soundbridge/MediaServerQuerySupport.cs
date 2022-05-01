@@ -1,11 +1,9 @@
-﻿namespace Pixa.Soundbridge
-{
+﻿namespace Pixa.Soundbridge {
     /// <summary>
     /// Represents the level of query support a media server has.
     /// </summary>
     /// <remarks></remarks>
-    public enum MediaServerQuerySupport
-    {
+    public enum MediaServerQuerySupport {
         /// <summary>
         /// The server does not support queries of any kind.
         /// </summary>

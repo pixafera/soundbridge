@@ -6,24 +6,21 @@ using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Pixa.Soundbridge
-{
+namespace Pixa.Soundbridge {
 
     /// <summary>
     /// Represents a Soundbridge and provides an object-oriented API to communicate
     /// with it.
     /// </summary>
     /// <remarks></remarks>
-    public class Soundbridge : SoundbridgeObject
-    {
+    public class Soundbridge : SoundbridgeObject {
 
         /// <summary>
         /// Initialises a new instance of <see cref="Soundbridge"/>.
         /// </summary>
         /// <param name="client">The <see cref="ISoundbridgeClient"/> to use.</param>
         /// <remarks></remarks>
-        public Soundbridge(ISoundbridgeClient client) : base(client)
-        {
+        public Soundbridge(ISoundbridgeClient client) : base(client) {
 
             _display = new SoundbridgeDisplay(this);
             client.AwaitingReply += Client_AwaitingReply;
@@ -37,20 +34,16 @@ namespace Pixa.Soundbridge
         }
 
         #region  Connection 
-        public void Close()
-        {
+        public void Close() {
             IDisposable c = Client as IDisposable;
-            if (c is object)
-            {
+            if (c is object) {
                 c.Dispose();
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
+        protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
-            if (disposing)
-            {
+            if (disposing) {
                 Cache.DeregisterCache(this, typeof(MediaServer));
                 Close();
             }
@@ -59,8 +52,7 @@ namespace Pixa.Soundbridge
 
         #region  Byte Arrays 
         // Converts a binary response into a Byte array.
-        internal static byte[] ResponseToByteArray(string response)
-        {
+        internal static byte[] ResponseToByteArray(string response) {
             if (response.Length % 2 != 0)
                 throw new ArgumentException("response must have an even length", "response");
             if (Regex.IsMatch(response, "[^0-9a-fA-F]"))
@@ -79,15 +71,12 @@ namespace Pixa.Soundbridge
         /// Gets and sets the active list.
         /// </summary>
         /// <value>The most recently requested list.</value>
-        internal IList ActiveList
-        {
-            get
-            {
+        internal IList ActiveList {
+            get {
                 return _activeList;
             }
 
-            set
-            {
+            set {
                 _activeList = value;
             }
         }
@@ -103,15 +92,12 @@ namespace Pixa.Soundbridge
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        public MediaServer ConnectedServer
-        {
-            get
-            {
+        public MediaServer ConnectedServer {
+            get {
                 return _connectedServer;
             }
 
-            internal set
-            {
+            internal set {
                 _connectedServer = value;
             }
         }
@@ -122,8 +108,7 @@ namespace Pixa.Soundbridge
         /// </summary>
         /// <returns>The list of available <see cref="MediaServer"/>s.</returns>
         /// <remarks>This method updates the active list.</remarks>
-        public SoundbridgeObjectCollection<MediaServer> GetServers()
-        {
+        public SoundbridgeObjectCollection<MediaServer> GetServers() {
             return GetServers(MediaServerType.All);
         }
 
@@ -135,8 +120,7 @@ namespace Pixa.Soundbridge
         /// <returns>The list of available <see cref="MediaServer"/>s matching the
         /// specified <paramref name="filter"/>.</returns>
         /// <remarks>This method updates the active list.</remarks>
-        public SoundbridgeObjectCollection<MediaServer> GetServers(MediaServerType filter)
-        {
+        public SoundbridgeObjectCollection<MediaServer> GetServers(MediaServerType filter) {
             // The filter string is always set to debug, so we always get the additional information
             string filterString = GetFilterString(filter);
             string r = Client.SetServerFilter(filterString);
@@ -153,8 +137,7 @@ namespace Pixa.Soundbridge
         /// Converts the specified <see cref="MediaServerType"/> value into a string
         /// for <see cref="ISoundbridgeClient.SetServerFilter"/>.
         /// </summary>
-        private string GetFilterString(MediaServerType value)
-        {
+        private string GetFilterString(MediaServerType value) {
             if (value == MediaServerType.All)
                 return "debug";
             string filterString = "";
@@ -184,11 +167,9 @@ namespace Pixa.Soundbridge
         /// Disconnects the <see cref="Soundbridge"/> from the media server it is
         /// currently connected to.
         /// </summary>
-        public void DisconnectServer()
-        {
+        public void DisconnectServer() {
             string s = Client.ServerDisconnect();
-            if (s == "Disconnected")
-            {
+            if (s == "Disconnected") {
                 _connectedServer = null;
             }
         }
@@ -216,8 +197,7 @@ namespace Pixa.Soundbridge
         /// <param name="e">The event data.</param>
         /// <remarks>Subclasses overriding this method should call the base class
         /// method to ensure that the event gets raised.</remarks>
-        protected virtual void OnAwaitingReply(RcpCommandProgressEventArgs e)
-        {
+        protected virtual void OnAwaitingReply(RcpCommandProgressEventArgs e) {
             AwaitingReply?.Invoke(this, e);
         }
 
@@ -227,8 +207,7 @@ namespace Pixa.Soundbridge
         /// <param name="e">The event data.</param>
         /// <remarks>Subclasses overriding this method should call the base class
         /// method to ensure that the event gets raised.</remarks>
-        protected virtual void OnReceivingData(RcpCommandReceivingProgressEventArgs e)
-        {
+        protected virtual void OnReceivingData(RcpCommandReceivingProgressEventArgs e) {
             ReceivingData?.Invoke(this, e);
         }
 
@@ -238,23 +217,19 @@ namespace Pixa.Soundbridge
         /// <param name="e">The event data.</param>
         /// <remarks>Subclasses overriding this method should call the base class
         /// method to ensure that the event gets raised.</remarks>
-        protected virtual void OnSendingRequest(RcpCommandProgressEventArgs e)
-        {
+        protected virtual void OnSendingRequest(RcpCommandProgressEventArgs e) {
             SendingRequest?.Invoke(this, e);
         }
 
-        private void Client_AwaitingReply(object sender, RcpCommandProgressEventArgs e)
-        {
+        private void Client_AwaitingReply(object sender, RcpCommandProgressEventArgs e) {
             OnAwaitingReply(e);
         }
 
-        private void Client_ReceivingData(object sender, RcpCommandReceivingProgressEventArgs e)
-        {
+        private void Client_ReceivingData(object sender, RcpCommandReceivingProgressEventArgs e) {
             OnReceivingData(e);
         }
 
-        private void Client_SendingRequest(object sender, RcpCommandProgressEventArgs e)
-        {
+        private void Client_SendingRequest(object sender, RcpCommandProgressEventArgs e) {
             OnSendingRequest(e);
         }
         #endregion
@@ -266,10 +241,8 @@ namespace Pixa.Soundbridge
         /// </summary>
         /// <value>True if the Soundbridge has completed initial setup; otherwise,
         /// false.</value>
-        public bool InitialSetupComplete
-        {
-            get
-            {
+        public bool InitialSetupComplete {
+            get {
                 return Client.GetInitialSetupComplete() == "Complete";
             }
         }
@@ -279,14 +252,11 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Gets the list of initial setup steps that must be completed.
         /// </summary>
-        public SetupStepCollection SetupSteps
-        {
-            get
-            {
+        public SetupStepCollection SetupSteps {
+            get {
                 if (InitialSetupComplete)
                     throw new Exception("The Soundbridge has already been set up");
-                if (_setupSteps is null)
-                {
+                if (_setupSteps is null) {
                     var f = new SetupStepFactory(Client);
                     var l = new List<SetupStep>();
                     foreach (string s in Client.GetRequiredSetupSteps())
@@ -301,10 +271,8 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Gets the Upgrade MAC address of the <see cref="Soundbridge"/>.
         /// </summary>
-        public string UpgradeMac
-        {
-            get
-            {
+        public string UpgradeMac {
+            get {
                 return Client.GetMacAddress("upgr");
             }
         }
@@ -312,17 +280,14 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Gets and sets the date and time according to the <see cref="Soundbridge"/>.
         /// </summary>
-        public DateTime LocalTime
-        {
-            get
-            {
+        public DateTime LocalTime {
+            get {
                 string d = Client.GetDate(false);
                 string t = Client.GetTime(false);
                 return DateTime.Parse(d + " " + t);
             }
 
-            set
-            {
+            set {
                 Client.SetTime(value.ToString("HH:mm:ss", CultureInfo.InvariantCulture));
                 Client.SetDate(value.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture));
             }
@@ -331,10 +296,8 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Gets the firmware version of the <see cref="Soundbridge"/>.
         /// </summary>
-        public Version SoftwareVersion
-        {
-            get
-            {
+        public Version SoftwareVersion {
+            get {
                 return new Version(Client.GetSoftwareVersion());
             }
         }
@@ -343,69 +306,54 @@ namespace Pixa.Soundbridge
         /// Reboots the <see cref="Soundbridge"/>.
         /// </summary>
         /// <remarks></remarks>
-        public void Reboot()
-        {
+        public void Reboot() {
             Client.Reboot();
         }
 
         /// <summary>
         /// Gets and sets of the <see cref="PowerState"/> of the <see cref="Soundbridge"/>.
         /// </summary>
-        public PowerState PowerState
-        {
-            get
-            {
+        public PowerState PowerState {
+            get {
                 return GetPowerStateValue(Client.GetPowerState());
             }
 
-            set
-            {
-                if (value != PowerState)
-                {
+            set {
+                if (value != PowerState) {
                     Client.SetPowerState(GetPowerStateString(value), false);
                 }
             }
         }
 
         // Converts a string value to a PowerState value.
-        private PowerState GetPowerStateValue(string value)
-        {
-            switch (value ?? "")
-            {
-                case "standby":
-                    {
+        private PowerState GetPowerStateValue(string value) {
+            switch (value ?? "") {
+                case "standby": {
                         return PowerState.Standby;
                     }
 
-                case "on":
-                    {
+                case "on": {
                         return PowerState.On;
                     }
 
-                default:
-                    {
+                default: {
                         throw new ArgumentException("value must be 'standby' or 'on'", "value");
                     }
             }
         }
 
         // Converts a power state value to a string.
-        private string GetPowerStateString(PowerState value)
-        {
-            switch (value)
-            {
-                case PowerState.Standby:
-                    {
+        private string GetPowerStateString(PowerState value) {
+            switch (value) {
+                case PowerState.Standby: {
                         return "standby";
                     }
 
-                case PowerState.On:
-                    {
+                case PowerState.On: {
                         return "on";
                     }
 
-                default:
-                    {
+                default: {
                         throw new ArgumentException("value must be a valid PowerState value", "value");
                     }
             }
@@ -417,10 +365,8 @@ namespace Pixa.Soundbridge
         /// Gets the <see cref="SoundbridgeDisplay"/> object that can be used to
         /// interact with the display of the soundbridge.
         /// </summary>
-        public SoundbridgeDisplay Display
-        {
-            get
-            {
+        public SoundbridgeDisplay Display {
+            get {
                 return _display;
             }
         }
@@ -439,12 +385,9 @@ namespace Pixa.Soundbridge
         /// </summary>
         /// <param name="command">The value to convert.</param>
         /// <returns>A string value representing the same button as <paramref name="command"/>.</returns>
-        public static string GetIrCommandTranslation(IRCommand command)
-        {
-            lock (_irCommandTranslationsLock)
-            {
-                if (_irCommandEnumTranslations is null)
-                {
+        public static string GetIrCommandTranslation(IRCommand command) {
+            lock (_irCommandTranslationsLock) {
+                if (_irCommandEnumTranslations is null) {
                     BuildTranslationDictionaries();
                 }
 
@@ -457,12 +400,9 @@ namespace Pixa.Soundbridge
         /// value.
         /// </summary>
         /// <param name="command">The value to convert.</param>
-        public static IRCommand GetIrCommandTransaction(string command)
-        {
-            lock (_irCommandTranslationsLock)
-            {
-                if (_irCommandStringTranslations is null)
-                {
+        public static IRCommand GetIrCommandTransaction(string command) {
+            lock (_irCommandTranslationsLock) {
+                if (_irCommandStringTranslations is null) {
                     BuildTranslationDictionaries();
                 }
 
@@ -470,16 +410,13 @@ namespace Pixa.Soundbridge
             }
         }
 
-        private static void BuildTranslationDictionaries()
-        {
+        private static void BuildTranslationDictionaries() {
             var i = default(IRCommand);
             _irCommandEnumTranslations = new Dictionary<IRCommand, string>();
             _irCommandStringTranslations = new Dictionary<string, IRCommand>();
-            foreach (FieldInfo f in typeof(IRCommand).GetFields())
-            {
+            foreach (FieldInfo f in typeof(IRCommand).GetFields()) {
                 IRCommandStringAttribute[] atts = (IRCommandStringAttribute[])f.GetCustomAttributes(typeof(IRCommandStringAttribute), false);
-                if (atts.Length == 1)
-                {
+                if (atts.Length == 1) {
                     _irCommandEnumTranslations.Add((IRCommand)f.GetValue(i), atts[0].CommandString);
                     _irCommandStringTranslations.Add(atts[0].CommandString, (IRCommand)f.GetValue(i));
                 }
@@ -489,50 +426,42 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Raised when a key on the IR remote is pressed.
         /// </summary>
-        public event EventHandler<IRKeyEventArgs> IRKeyDown
-        {
-            add
-            {
+        public event EventHandler<IRKeyEventArgs> IRKeyDown {
+            add {
                 _irKeyDown = (EventHandler<IRKeyEventArgs>)Delegate.Combine(_irKeyDown, value);
                 if (_irKeyDown is object)
                     Client.IRDemodSubscribe(true);
             }
 
-            remove
-            {
+            remove {
                 _irKeyDown = (EventHandler<IRKeyEventArgs>)Delegate.Remove(_irKeyDown, value);
                 if (_irKeyDown is null)
                     Client.IRDemodUnsubscribe();
             }
         }
 
-        void OnIRKeyDown(object sender, IRKeyEventArgs e)
-        {
+        void OnIRKeyDown(object sender, IRKeyEventArgs e) {
             _irKeyDown(sender, e);
         }
 
         /// <summary>
         /// Raised when a key on the IR remote is depressed.
         /// </summary>
-        public event EventHandler<IRKeyEventArgs> IRKeyUp
-        {
-            add
-            {
+        public event EventHandler<IRKeyEventArgs> IRKeyUp {
+            add {
                 _irKeyUp = (EventHandler<IRKeyEventArgs>)Delegate.Combine(_irKeyUp, value);
                 if (_irKeyUp is object)
                     Client.IRDemodSubscribe(true);
             }
 
-            remove
-            {
+            remove {
                 _irKeyUp = (EventHandler<IRKeyEventArgs>)Delegate.Remove(_irKeyUp, value);
                 if (_irKeyUp is null)
                     Client.IRDemodUnsubscribe();
             }
         }
 
-        void OnIRKeyUp(object sender, IRKeyEventArgs e)
-        {
+        void OnIRKeyUp(object sender, IRKeyEventArgs e) {
             _irKeyUp(sender, e);
         }
 
@@ -540,25 +469,21 @@ namespace Pixa.Soundbridge
         /// Dispatches the specified <see cref="IRCommand"/> to the <see cref="Soundbridge"/>.
         /// </summary>
         /// <param name="command">The <see cref="IRCommand"/> to execute.</param>
-        public void DispatchIrCommand(IRCommand command)
-        {
+        public void DispatchIrCommand(IRCommand command) {
             string r = Client.IRDispatchCommand(GetIrCommandTranslation(command));
             if (r != "OK")
                 ExceptionHelper.ThrowCommandReturnError("IrDispatchCommand", r);
         }
 
-        private void Client_IRKeyDown(string data)
-        {
+        private void Client_IRKeyDown(string data) {
             var e = new IRKeyEventArgs(this, (IRCommand)int.Parse(GetIrCommandTranslation((IRCommand)int.Parse(data))));
             OnIRKeyDown(this, e);
-            if (!e.IsHandled)
-            {
+            if (!e.IsHandled) {
                 DispatchIrCommand(e.Command);
             }
         }
 
-        private void Client_IRKeyUp(string data)
-        {
+        private void Client_IRKeyUp(string data) {
             var e = new IRKeyEventArgs(this, (IRCommand)int.Parse(GetIrCommandTranslation((IRCommand)int.Parse(data))));
             OnIRKeyUp(this, e);
         }
@@ -567,10 +492,8 @@ namespace Pixa.Soundbridge
         #region  Cache 
         private SoundbridgeCache _cache = new SoundbridgeCache();
 
-        internal SoundbridgeCache Cache
-        {
-            get
-            {
+        internal SoundbridgeCache Cache {
+            get {
                 return _cache;
             }
         }

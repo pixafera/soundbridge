@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
 
     /// <summary>
     /// Provides base functionality for processing responses from the Soundbridge and signalling the requesting thread.
     /// </summary>
     /// <remarks></remarks>
-    public abstract class ResponseProcessorBase : IResponseProcessor
-    {
+    public abstract class ResponseProcessorBase : IResponseProcessor {
 
         /// <summary>
         /// Instantiates a new instance of ResponseProcessorBase for the specified SoundbridgeClient and EventWaitHandle.
@@ -17,8 +15,7 @@ namespace Pixa.Soundbridge.Client
         /// <param name="client"></param>
         /// <param name="waitHandle"></param>
         /// <remarks></remarks>
-        public ResponseProcessorBase(ISoundbridgeClient client, string command, EventWaitHandle waitHandle)
-        {
+        public ResponseProcessorBase(ISoundbridgeClient client, string command, EventWaitHandle waitHandle) {
             _client = (TcpSoundbridgeClient)client;
             _command = command;
             _waitHandle = waitHandle;
@@ -33,10 +30,8 @@ namespace Pixa.Soundbridge.Client
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        public TcpSoundbridgeClient Client
-        {
-            get
-            {
+        public TcpSoundbridgeClient Client {
+            get {
                 return _client;
             }
         }
@@ -45,10 +40,8 @@ namespace Pixa.Soundbridge.Client
         #region  Command 
         private string _command;
 
-        public string Command
-        {
-            get
-            {
+        public string Command {
+            get {
                 return _command;
             }
         }
@@ -63,10 +56,8 @@ namespace Pixa.Soundbridge.Client
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        protected EventWaitHandle WaitHandle
-        {
-            get
-            {
+        protected EventWaitHandle WaitHandle {
+            get {
                 return _waitHandle;
             }
         }
@@ -76,15 +67,12 @@ namespace Pixa.Soundbridge.Client
         private List<string> _response = new List<string>();
         private bool _byteResponse;
 
-        public bool IsByteArray
-        {
-            get
-            {
+        public bool IsByteArray {
+            get {
                 return _byteResponse;
             }
 
-            set
-            {
+            set {
                 _byteResponse = value;
             }
         }
@@ -95,10 +83,8 @@ namespace Pixa.Soundbridge.Client
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        public int ResponseCount
-        {
-            get
-            {
+        public int ResponseCount {
+            get {
                 return _response.Count;
             }
         }
@@ -109,10 +95,8 @@ namespace Pixa.Soundbridge.Client
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        public string[] Response
-        {
-            get
-            {
+        public string[] Response {
+            get {
                 return _response.ToArray();
             }
         }
@@ -122,8 +106,7 @@ namespace Pixa.Soundbridge.Client
         /// </summary>
         /// <param name="item"></param>
         /// <remarks></remarks>
-        protected void AddResponse(string item)
-        {
+        protected void AddResponse(string item) {
             _response.Add(item);
         }
         #endregion

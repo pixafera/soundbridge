@@ -1,7 +1,5 @@
-﻿namespace Pixa.Soundbridge.Client
-{
-    public enum TransactionStatus
-    {
+﻿namespace Pixa.Soundbridge.Client {
+    public enum TransactionStatus {
         Pending,
         Initiated,
         Complete,

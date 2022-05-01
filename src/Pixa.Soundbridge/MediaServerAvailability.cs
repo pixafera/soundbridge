@@ -1,10 +1,8 @@
-﻿namespace Pixa.Soundbridge
-{
+﻿namespace Pixa.Soundbridge {
     /// <summary>
     /// Represents the availability of a <see cref="MediaServer"/>.
     /// </summary>
-    public enum MediaServerAvailability
-    {
+    public enum MediaServerAvailability {
         /// <summary>
         /// Indicates that the server is online and available to connect to.
         /// </summary>

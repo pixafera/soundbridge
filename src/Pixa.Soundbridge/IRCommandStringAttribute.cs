@@ -1,21 +1,16 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge
-{
+namespace Pixa.Soundbridge {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-    public class IRCommandStringAttribute : Attribute
-    {
+    public class IRCommandStringAttribute : Attribute {
         private string _commandString;
 
-        public IRCommandStringAttribute(string commandString)
-        {
+        public IRCommandStringAttribute(string commandString) {
             _commandString = commandString;
         }
 
-        public string CommandString
-        {
-            get
-            {
+        public string CommandString {
+            get {
                 return _commandString;
             }
         }

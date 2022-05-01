@@ -1,15 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
 
     /// <summary>
     /// Processes responses to synchronous RCP methods.
     /// </summary>
     /// <remarks></remarks>
-    internal class SynchronousResponseProcessor : ResponseProcessorBase
-    {
+    internal class SynchronousResponseProcessor : ResponseProcessorBase {
         private int _responseLength = 1;
         private bool _isList;
 
@@ -19,8 +17,7 @@ namespace Pixa.Soundbridge.Client
         /// <param name="client"></param>
         /// <param name="waitHandle"></param>
         /// <remarks></remarks>
-        public SynchronousResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle) : this(client, command, waitHandle, false)
-        {
+        public SynchronousResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle) : this(client, command, waitHandle, false) {
         }
 
         /// <summary>
@@ -31,8 +28,7 @@ namespace Pixa.Soundbridge.Client
         /// <param name="waithandle"></param>
         /// <param name="isList"></param>
         /// <remarks></remarks>
-        public SynchronousResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waithandle, bool isList) : base(client, command, waithandle)
-        {
+        public SynchronousResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waithandle, bool isList) : base(client, command, waithandle) {
             _isList = isList;
         }
 
@@ -42,10 +38,8 @@ namespace Pixa.Soundbridge.Client
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        public bool IsList
-        {
-            get
-            {
+        public bool IsList {
+            get {
                 return _isList;
             }
         }
@@ -55,10 +49,8 @@ namespace Pixa.Soundbridge.Client
         /// </summary>
         /// <param name="response"></param>
         /// <remarks></remarks>
-        public override void Process(string response)
-        {
-            if (response.StartsWith("ListResultSize"))
-            {
+        public override void Process(string response) {
+            if (response.StartsWith("ListResultSize")) {
                 int.TryParse(response.Substring(15), out _responseLength);
                 return;
             }
@@ -70,16 +62,14 @@ namespace Pixa.Soundbridge.Client
                 WaitHandle.Set();
         }
 
-        public override void PostProcess()
-        {
+        public override void PostProcess() {
             if (Response.Length == 0)
                 ExceptionHelper.ThrowCommandTimeout(Command);
 
             /* TODO ERROR: Skipped IfDirectiveTrivia
             #If DEBUG Then
             */
-            if (Response.Length == 1 & Response[0] == "TransactionInitiated")
-            {
+            if (Response.Length == 1 & Response[0] == "TransactionInitiated") {
                 Debug.WriteLine(string.Format("The command '{0}' appears to be a transacted command, but was handled by a SynchronousResponseProcessor", Command));
             }
             /* TODO ERROR: Skipped EndIfDirectiveTrivia

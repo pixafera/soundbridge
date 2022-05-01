@@ -1,29 +1,23 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge.Client
-{
+namespace Pixa.Soundbridge.Client {
     /// <summary>
     /// Provides metadata about synchronous RCP commands.
     /// </summary>
     /// <remarks></remarks>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class RcpSynchronousCommandAttribute : RcpCommandAttribute
-    {
+    public sealed class RcpSynchronousCommandAttribute : RcpCommandAttribute {
         private bool _isList;
 
-        public RcpSynchronousCommandAttribute(string command) : this(command, false)
-        {
+        public RcpSynchronousCommandAttribute(string command) : this(command, false) {
         }
 
-        public RcpSynchronousCommandAttribute(string command, bool isList) : base(command)
-        {
+        public RcpSynchronousCommandAttribute(string command, bool isList) : base(command) {
             _isList = isList;
         }
 
-        public bool IsList
-        {
-            get
-            {
+        public bool IsList {
+            get {
                 return _isList;
             }
         }
@@ -35,8 +29,7 @@ namespace Pixa.Soundbridge.Client
         /// <param name="waitHandle"></param>
         /// <returns></returns>
         /// <remarks></remarks>
-        public override IResponseProcessor CreateResponseProcessor(TcpSoundbridgeClient client, System.Threading.EventWaitHandle waitHandle)
-        {
+        public override IResponseProcessor CreateResponseProcessor(TcpSoundbridgeClient client, System.Threading.EventWaitHandle waitHandle) {
             return new SynchronousResponseProcessor(client, Command, waitHandle, _isList);
         }
     }

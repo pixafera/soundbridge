@@ -1,73 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pixa.Soundbridge
-{
-    public class Song : MediaObject
-    {
+namespace Pixa.Soundbridge {
+    public class Song : MediaObject {
         private bool _hasInfo;
         private Dictionary<string, string> _info;
 
-        internal Song(MediaServer server, int index, string name) : base(server, index, name)
-        {
+        internal Song(MediaServer server, int index, string name) : base(server, index, name) {
         }
 
-        internal Song(MediaContainer parent, int index, string name) : base(parent.Server, index, name)
-        {
+        internal Song(MediaContainer parent, int index, string name) : base(parent.Server, index, name) {
         }
 
-        public string Album
-        {
-            get
-            {
+        public string Album {
+            get {
                 return GetSongInfo("album");
             }
         }
 
-        public string Artist
-        {
-            get
-            {
+        public string Artist {
+            get {
                 return GetSongInfo("artist");
             }
         }
 
-        public string Genre
-        {
-            get
-            {
+        public string Genre {
+            get {
                 return GetSongInfo("genre");
             }
         }
 
-        public bool HasInfo
-        {
-            get
-            {
+        public bool HasInfo {
+            get {
                 return _hasInfo;
             }
         }
 
-        public string Id
-        {
-            get
-            {
+        public string Id {
+            get {
                 return GetSongInfo("id");
             }
         }
 
-        public string Status
-        {
-            get
-            {
+        public string Status {
+            get {
                 return GetSongInfo("status");
             }
         }
 
-        public string Title
-        {
-            get
-            {
+        public string Title {
+            get {
                 return GetSongInfo("title");
             }
         }
@@ -76,10 +58,8 @@ namespace Pixa.Soundbridge
         /// Gets the length of the track in milliseconds.
         /// </summary>
         /// <value>The length of the track in milliseconds.</value>
-        public int TrackLength
-        {
-            get
-            {
+        public int TrackLength {
+            get {
                 return int.Parse(GetSongInfo("trackLengthMS"));
             }
         }
@@ -88,98 +68,70 @@ namespace Pixa.Soundbridge
         /// Gets the track number
         /// </summary>
         /// <value>The length of the track in milliseconds.</value>
-        public int TrackNumber
-        {
-            get
-            {
+        public int TrackNumber {
+            get {
                 return int.Parse(GetSongInfo("trackNumber"));
             }
         }
 
-        public string Url
-        {
-            get
-            {
+        public string Url {
+            get {
                 return GetSongInfo("resource[0] url:");
             }
         }
 
-        public string GetSongInfo(string key)
-        {
-            if (!HasInfo)
-            {
-                if (IsActive)
-                {
+        public string GetSongInfo(string key) {
+            if (!HasInfo) {
+                if (IsActive) {
                     var info = Client.GetSongInfo(Index);
                     _info = new Dictionary<string, string>();
-                    foreach (string s in info)
-                    {
+                    foreach (string s in info) {
                         var parts = s.Split(":".ToCharArray(), 2, StringSplitOptions.None);
                         _info.Add(parts[0], parts[1]);
                     }
 
                     _hasInfo = true;
-                }
-                else
-                {
+                } else {
                     throw new InvalidOperationException("Can't retrieve SongInfo when the MediaObject is not in the active list.");
                 }
             }
 
-            if (_info.ContainsKey(key))
-            {
+            if (_info.ContainsKey(key)) {
                 return _info[key];
-            }
-            else
-            {
+            } else {
                 return "";
             }
         }
 
-        public void Play()
-        {
+        public void Play() {
             Play(false);
         }
 
-        public void Play(bool excludeList)
-        {
-            if (IsActive)
-            {
-                if (excludeList)
-                {
+        public void Play(bool excludeList) {
+            if (IsActive) {
+                if (excludeList) {
                     string r = Client.QueueAndPlayOne(Index);
-                    if (r != "OK")
-                    {
+                    if (r != "OK") {
                         ExceptionHelper.ThrowCommandReturnError("QueueAndPlayOne", r);
                     }
-                }
-                else
-                {
+                } else {
                     string r = Client.QueueAndPlay(Index);
-                    if (r != "OK")
-                    {
+                    if (r != "OK") {
                         ExceptionHelper.ThrowCommandReturnError("QueueAndPlay", r);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 throw new InvalidOperationException("Can't play a song that's not in the active list");
             }
         }
 
-        public void InsertIntoNowPlaying(int targetIndex)
-        {
-            if (IsActive)
-            {
+        public void InsertIntoNowPlaying(int targetIndex) {
+            if (IsActive) {
                 string r = Client.NowPlayingInsert(Index, targetIndex);
-                if (r != "OK")
-                {
+                if (r != "OK") {
                     ExceptionHelper.ThrowCommandReturnError("NowPlayingInsert", r);
                 }
-            }
-            else
-            {
+            } else {
                 throw new InvalidOperationException("Can't play a song that's not in the active list");
             }
         }

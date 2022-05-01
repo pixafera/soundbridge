@@ -1,11 +1,9 @@
-﻿namespace Pixa.Soundbridge.Client
-{
+﻿namespace Pixa.Soundbridge.Client {
     /// <summary>
     /// Provides an interface for objects to process responses from the Soundbridge or other RCP compliant device.
     /// </summary>
     /// <remarks></remarks>
-    public interface IResponseProcessor
-    {
+    public interface IResponseProcessor {
 
         /// <summary>
         /// Gets the name of the command this <see cref="IResponseProcessor"/> is processing responses for.

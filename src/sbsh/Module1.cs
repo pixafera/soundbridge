@@ -2,21 +2,17 @@
 using System.IO;
 using System.Net.Sockets;
 
-namespace Pixa.Soundbridge.Shell
-{
-    static class Module1
-    {
+namespace Pixa.Soundbridge.Shell {
+    static class Module1 {
         private static TcpClient _client;
 
-        public static void Main(string[] args)
-        {
+        public static void Main(string[] args) {
             _client = new TcpClient(args[0], 5555);
             var d = new Action(ReadCon);
             d.BeginInvoke(null, null);
             string input;
             var sw = new StreamWriter(_client.GetStream());
-            do
-            {
+            do {
                 input = Console.ReadLine();
                 if (input == "exit")
                     return;
@@ -28,8 +24,7 @@ namespace Pixa.Soundbridge.Shell
             while (true);
         }
 
-        public static void ReadCon()
-        {
+        public static void ReadCon() {
             var sr = new StreamReader(_client.GetStream());
             while (_client.Connected)
                 Console.WriteLine(sr.ReadLine());

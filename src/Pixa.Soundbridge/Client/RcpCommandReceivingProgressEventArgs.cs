@@ -1,20 +1,15 @@
-﻿namespace Pixa.Soundbridge.Client
-{
-    public class RcpCommandReceivingProgressEventArgs : RcpCommandProgressEventArgs
-    {
+﻿namespace Pixa.Soundbridge.Client {
+    public class RcpCommandReceivingProgressEventArgs : RcpCommandProgressEventArgs {
         private int _progress;
         private int _total;
 
-        public RcpCommandReceivingProgressEventArgs(string command) : this(command, -1)
-        {
+        public RcpCommandReceivingProgressEventArgs(string command) : this(command, -1) {
         }
 
-        public RcpCommandReceivingProgressEventArgs(string command, int progress) : this(command, progress, -1)
-        {
+        public RcpCommandReceivingProgressEventArgs(string command, int progress) : this(command, progress, -1) {
         }
 
-        public RcpCommandReceivingProgressEventArgs(string command, int progress, int total) : base(command)
-        {
+        public RcpCommandReceivingProgressEventArgs(string command, int progress, int total) : base(command) {
             _progress = progress;
             _total = total;
         }
@@ -25,10 +20,8 @@
         /// <value></value>
         /// <returns>The progress of the transaction, or -1 if this data was not sent.</returns>
         /// <remarks></remarks>
-        public int Progress
-        {
-            get
-            {
+        public int Progress {
+            get {
                 return _progress;
             }
         }
@@ -39,10 +32,8 @@
         /// <value></value>
         /// <returns>The total size of the transaction being executed, or -1 if this data was not sent.</returns>
         /// <remarks></remarks>
-        public int Total
-        {
-            get
-            {
+        public int Total {
+            get {
                 return _total;
             }
         }

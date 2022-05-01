@@ -1,29 +1,22 @@
 ﻿using Pixa.Soundbridge.Client;
 using System;
 
-namespace Pixa.Soundbridge
-{
-    public class RegionSetupStep : SetupStep
-    {
-        internal RegionSetupStep(ISoundbridgeClient client) : base(client)
-        {
+namespace Pixa.Soundbridge {
+    public class RegionSetupStep : SetupStep {
+        internal RegionSetupStep(ISoundbridgeClient client) : base(client) {
         }
 
-        protected override string Name
-        {
-            get
-            {
+        protected override string Name {
+            get {
                 return "Region";
             }
         }
 
-        public override string[] GetSelectionList()
-        {
+        public override string[] GetSelectionList() {
             return Client.ListRegions();
         }
 
-        public override void MakeSelection(string value)
-        {
+        public override void MakeSelection(string value) {
             var regions = Client.ListRegions();
             int index = Array.IndexOf(regions, value);
             if (index == -1)

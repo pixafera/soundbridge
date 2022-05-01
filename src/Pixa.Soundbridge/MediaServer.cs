@@ -1,15 +1,13 @@
 ﻿using Pixa.Soundbridge.Client;
 using System;
 
-namespace Pixa.Soundbridge
-{
+namespace Pixa.Soundbridge {
     /// <summary>
     /// Represents a media streaming server that a <see cref="Soundbridge"/> can
     /// connect to.
     /// </summary>
     /// <remarks></remarks>
-    public class MediaServer : SoundbridgeListObject
-    {
+    public class MediaServer : SoundbridgeListObject {
         private MediaServerAvailability _availability;
         private Soundbridge _sb;
         private MediaServerType _type;
@@ -22,8 +20,7 @@ namespace Pixa.Soundbridge
         /// Initialises a new instance of <see cref="MediaServer"/> from information
         /// gleaned from the <see cref="ISoundbridgeClient.ListServers"/> command.
         /// </summary>
-        internal MediaServer(Soundbridge sb, MediaServerAvailability availability, MediaServerType type, string name, int index) : base(sb, index, name)
-        {
+        internal MediaServer(Soundbridge sb, MediaServerAvailability availability, MediaServerType type, string name, int index) : base(sb, index, name) {
             _sb = sb;
             _availability = availability;
             _type = type;
@@ -36,10 +33,8 @@ namespace Pixa.Soundbridge
         /// </summary>
         /// <value>True if the <see cref="MediaServer"/> is the active server;
         /// otherwise, false.</value>
-        public bool Connected
-        {
-            get
-            {
+        public bool Connected {
+            get {
                 return ReferenceEquals(Soundbridge.ConnectedServer, this);
             }
         }
@@ -47,10 +42,8 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Gets the availability of the media server.
         /// </summary>
-        public MediaServerAvailability Availability
-        {
-            get
-            {
+        public MediaServerAvailability Availability {
+            get {
                 return _availability;
             }
         }
@@ -59,10 +52,8 @@ namespace Pixa.Soundbridge
         /// Gets the <see cref="Soundbridge"/> that received the <see cref="MediaServer"/>
         /// information.
         /// </summary>
-        public Soundbridge Soundbridge
-        {
-            get
-            {
+        public Soundbridge Soundbridge {
+            get {
                 return _sb;
             }
         }
@@ -70,10 +61,8 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Gets the media server's <see cref="MediaServerType"/>.
         /// </summary>
-        public MediaServerType Type
-        {
-            get
-            {
+        public MediaServerType Type {
+            get {
                 return _type;
             }
         }
@@ -82,40 +71,33 @@ namespace Pixa.Soundbridge
         /// Connects the <see cref="Soundbridge"/> to the <see cref="MediaServer"/>.
         /// </summary>
         /// <remarks></remarks>
-        public void Connect()
-        {
+        public void Connect() {
             if (Soundbridge.ConnectedServer is object)
                 throw new InvalidOperationException("Can't connect to a server when there's already one connected.");
             int tries = 0;
-            while (tries < 2)
-            {
+            while (tries < 2) {
                 string r = Client.ServerConnect(Index);
                 bool exitWhile = false;
-                switch (r ?? "")
-                {
-                    case "Connected":
-                        {
+                switch (r ?? "") {
+                    case "Connected": {
                             exitWhile = true;
                             break;
                         }
 
                     case "ConnectionFailedAlreadyConnected":
-                    case "GenericError":
-                        {
+                    case "GenericError": {
                             Client.GetConnectedServer();
                             Client.ServerDisconnect();
                             break;
                         }
 
-                    default:
-                        {
+                    default: {
                             ExceptionHelper.ThrowCommandReturnError("ServerConnect", r);
                             break;
                         }
                 }
 
-                if (exitWhile)
-                {
+                if (exitWhile) {
                     break;
                 }
             }
@@ -130,8 +112,7 @@ namespace Pixa.Soundbridge
         /// <param name="password">The password to use to connect to the media
         /// server.</param>
         /// <remarks></remarks>
-        public void Connect(string password)
-        {
+        public void Connect(string password) {
             string r = Client.SetServerConnectPassword(password);
             if (r != "OK")
                 ExceptionHelper.ThrowCommandReturnError("SetServerConnectPassword", r);
@@ -144,8 +125,7 @@ namespace Pixa.Soundbridge
         /// server if one is needed.
         /// </summary>
         /// <remarks></remarks>
-        public void LaunchUi()
-        {
+        public void LaunchUi() {
             string r = Client.ServerLaunchUI(Index);
             if (r != "OK")
                 ExceptionHelper.ThrowCommandReturnError("ServerLaunchUI", r);
@@ -156,8 +136,7 @@ namespace Pixa.Soundbridge
         /// Sets this <see cref="MediaServer"/> as the active server.
         /// </summary>
         /// <remarks></remarks>
-        private void OnAfterConnect()
-        {
+        private void OnAfterConnect() {
             Soundbridge.ConnectedServer = this;
             GetCapabilities();
         }
@@ -165,8 +144,7 @@ namespace Pixa.Soundbridge
         /// <summary>
         /// Updates the <see cref="MediaServer"/> with its capabilities.
         /// </summary>
-        private void GetCapabilities()
-        {
+        private void GetCapabilities() {
             var info = Client.ServerGetCapabilities();
             if (info.Length == 1)
                 ExceptionHelper.ThrowCommandReturnError("ServerGetCapabilities", info[0]);
@@ -180,57 +158,45 @@ namespace Pixa.Soundbridge
         /// Converts a server type received from the <see cref="Soundbridge"/> to a
         /// <see cref="MediaServerType"/> value.
         /// </summary>
-        private MediaServerType ActiveServerTypeToMediaServerType(string value)
-        {
-            switch (value ?? "")
-            {
-                case "daap":
-                    {
+        private MediaServerType ActiveServerTypeToMediaServerType(string value) {
+            switch (value ?? "") {
+                case "daap": {
                         return MediaServerType.Daap;
                     }
 
-                case "upnp":
-                    {
+                case "upnp": {
                         return MediaServerType.Upnp;
                     }
 
-                case "rsp":
-                    {
+                case "rsp": {
                         return MediaServerType.Rsp;
                     }
 
-                case "slim":
-                    {
+                case "slim": {
                         return MediaServerType.Slim;
                     }
 
-                case "radio":
-                    {
+                case "radio": {
                         return MediaServerType.Radio;
                     }
 
-                case "flash":
-                    {
+                case "flash": {
                         return MediaServerType.Flash;
                     }
 
-                case "linein":
-                    {
+                case "linein": {
                         return MediaServerType.LineIn;
                     }
 
-                case "am":
-                    {
+                case "am": {
                         return MediaServerType.AM;
                     }
 
-                case "fm":
-                    {
+                case "fm": {
                         return MediaServerType.FM;
                     }
 
-                default:
-                    {
+                default: {
                         return (MediaServerType)(-1);
                     }
             }
@@ -240,51 +206,40 @@ namespace Pixa.Soundbridge
         /// Converts a string received from the <see cref="Soundbridge"/> to a <see cref="MediaServerQuerySupport"/>
         /// value.
         /// </summary>
-        private MediaServerQuerySupport QuerySupportToMediaServerQuerySupport(string value)
-        {
-            switch (value ?? "")
-            {
-                case "None":
-                    {
+        private MediaServerQuerySupport QuerySupportToMediaServerQuerySupport(string value) {
+            switch (value ?? "") {
+                case "None": {
                         return MediaServerQuerySupport.None;
                     }
 
-                case "Songs":
-                    {
+                case "Songs": {
                         return MediaServerQuerySupport.Songs;
                     }
 
-                case "Basic":
-                    {
+                case "Basic": {
                         return MediaServerQuerySupport.Basic;
                     }
 
-                case "Partial":
-                    {
+                case "Partial": {
                         return MediaServerQuerySupport.Partial;
                     }
 
-                default:
-                    {
+                default: {
                         return (MediaServerQuerySupport)(-1);
                     }
             }
         }
 
-        public override bool ShouldCacheDispose
-        {
-            get
-            {
+        public override bool ShouldCacheDispose {
+            get {
                 return !Connected;
             }
         }
 
         private MediaContainer _container;
 
-        public MediaContainer Container
-        {
-            get
-            {
+        public MediaContainer Container {
+            get {
                 return _container;
             }
         }

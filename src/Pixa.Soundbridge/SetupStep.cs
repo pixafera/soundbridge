@@ -1,15 +1,12 @@
 ﻿using Pixa.Soundbridge.Client;
 
-namespace Pixa.Soundbridge
-{
+namespace Pixa.Soundbridge {
     /// <summary>
     /// Represents a step in the initial setup of a Soundbridge.
     /// </summary>
     /// <remarks></remarks>
-    public abstract class SetupStep : SoundbridgeObject
-    {
-        protected SetupStep(ISoundbridgeClient client) : base(client)
-        {
+    public abstract class SetupStep : SoundbridgeObject {
+        protected SetupStep(ISoundbridgeClient client) : base(client) {
         }
 
         /// <summary>

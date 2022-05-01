@@ -1,29 +1,22 @@
 ﻿using Pixa.Soundbridge.Client;
 using System;
 
-namespace Pixa.Soundbridge
-{
-    public class TimeZoneSetupStep : SetupStep
-    {
-        internal TimeZoneSetupStep(ISoundbridgeClient client) : base(client)
-        {
+namespace Pixa.Soundbridge {
+    public class TimeZoneSetupStep : SetupStep {
+        internal TimeZoneSetupStep(ISoundbridgeClient client) : base(client) {
         }
 
-        protected override string Name
-        {
-            get
-            {
+        protected override string Name {
+            get {
                 return "Time Zone";
             }
         }
 
-        public override string[] GetSelectionList()
-        {
+        public override string[] GetSelectionList() {
             return Client.ListTimeZones();
         }
 
-        public override void MakeSelection(string value)
-        {
+        public override void MakeSelection(string value) {
             var timeZones = Client.ListTimeZones();
             int index = Array.IndexOf(timeZones, value);
             if (index == -1)

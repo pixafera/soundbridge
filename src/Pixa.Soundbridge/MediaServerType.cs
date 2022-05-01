@@ -1,14 +1,12 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge
-{
+namespace Pixa.Soundbridge {
     /// <summary>
     /// Represents the type of a <see cref="MediaServer"/>.
     /// </summary>
     /// <remarks></remarks>
     [Flags()]
-    public enum MediaServerType
-    {
+    public enum MediaServerType {
         /// <summary>
         /// The server uses the iTunes DAAP protocol.
         /// </summary>
