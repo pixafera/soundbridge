@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
 
     /// <summary>
-/// Provides base functionality for processing responses from the Soundbridge and signalling the requesting thread.
-/// </summary>
-/// <remarks></remarks>
+    /// Provides base functionality for processing responses from the Soundbridge and signalling the requesting thread.
+    /// </summary>
+    /// <remarks></remarks>
     public abstract class ResponseProcessorBase : IResponseProcessor
     {
 
         /// <summary>
-    /// Instantiates a new instance of ResponseProcessorBase for the specified SoundbridgeClient and EventWaitHandle.
-    /// </summary>
-    /// <param name="client"></param>
-    /// <param name="waitHandle"></param>
-    /// <remarks></remarks>
+        /// Instantiates a new instance of ResponseProcessorBase for the specified SoundbridgeClient and EventWaitHandle.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="waitHandle"></param>
+        /// <remarks></remarks>
         public ResponseProcessorBase(ISoundbridgeClient client, string command, EventWaitHandle waitHandle)
         {
             _client = (TcpSoundbridgeClient)client;
@@ -28,11 +28,11 @@ namespace Pixa.Soundbridge.Library
         private TcpSoundbridgeClient _client;
 
         /// <summary>
-    /// Gets the client this ResponseProcessorBase is associated with.
-    /// </summary>
-    /// <value></value>
-    /// <returns></returns>
-    /// <remarks></remarks>
+        /// Gets the client this ResponseProcessorBase is associated with.
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public TcpSoundbridgeClient Client
         {
             get
@@ -58,11 +58,11 @@ namespace Pixa.Soundbridge.Library
         private EventWaitHandle _waitHandle;
 
         /// <summary>
-    /// Gets the EventWaitHandle this ResponseProcessorBase will signal when the entire response has been received.
-    /// </summary>
-    /// <value></value>
-    /// <returns></returns>
-    /// <remarks></remarks>
+        /// Gets the EventWaitHandle this ResponseProcessorBase will signal when the entire response has been received.
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
         protected EventWaitHandle WaitHandle
         {
             get
@@ -90,11 +90,11 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Gets the number of lines in the response.
-    /// </summary>
-    /// <value></value>
-    /// <returns></returns>
-    /// <remarks></remarks>
+        /// Gets the number of lines in the response.
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public int ResponseCount
         {
             get
@@ -104,11 +104,11 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Gets the lines in the response.
-    /// </summary>
-    /// <value></value>
-    /// <returns></returns>
-    /// <remarks></remarks>
+        /// Gets the lines in the response.
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public string[] Response
         {
             get
@@ -118,10 +118,10 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Adds a line to the list of response lines that are of interest to consuming clients.
-    /// </summary>
-    /// <param name="item"></param>
-    /// <remarks></remarks>
+        /// Adds a line to the list of response lines that are of interest to consuming clients.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <remarks></remarks>
         protected void AddResponse(string item)
         {
             _response.Add(item);
@@ -130,16 +130,16 @@ namespace Pixa.Soundbridge.Library
 
         #region  Process 
         /// <summary>
-    /// Processes the specified response line.
-    /// </summary>
-    /// <param name="response"></param>
-    /// <remarks></remarks>
+        /// Processes the specified response line.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <remarks></remarks>
         public abstract void Process(string response);
 
         /// <summary>
-    /// Checks the response for timeouts and error values.
-    /// </summary>
-    /// <remarks>This method will be called on the thread that called the public method on <see cref="TcpSoundbridgeClient"/>.</remarks>
+        /// Checks the response for timeouts and error values.
+        /// </summary>
+        /// <remarks>This method will be called on the thread that called the public method on <see cref="TcpSoundbridgeClient"/>.</remarks>
         public abstract void PostProcess();
         #endregion
     }

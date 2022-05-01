@@ -10,6 +10,7 @@
 	  <PackageReadmeFile>Readme.md</PackageReadmeFile>
 	  <PackageTags>Roku;Soundbridge;RCP</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RootNamespace>Pixa.Soundbridge.Shell</RootNamespace>
   </PropertyGroup>
 
 </Project>

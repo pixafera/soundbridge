@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
     public class RcpCommandProgressEventArgs : EventArgs
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
     public class SoundbridgeCommandException : SoundbridgeClientException
     {

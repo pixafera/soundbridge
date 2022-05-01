@@ -1,47 +1,47 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
 
     /// <summary>
-/// Processes responses to synchronous RCP methods.
-/// </summary>
-/// <remarks></remarks>
+    /// Processes responses to synchronous RCP methods.
+    /// </summary>
+    /// <remarks></remarks>
     internal class SynchronousResponseProcessor : ResponseProcessorBase
     {
         private int _responseLength = 1;
         private bool _isList;
 
         /// <summary>
-   /// Instantiates a new instance of SynchronousResponseProcessor for the specified SoundbridgeClient and EventWaitHandle.
-   /// </summary>
-   /// <param name="client"></param>
-   /// <param name="waitHandle"></param>
-   /// <remarks></remarks>
+        /// Instantiates a new instance of SynchronousResponseProcessor for the specified SoundbridgeClient and EventWaitHandle.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="waitHandle"></param>
+        /// <remarks></remarks>
         public SynchronousResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle) : this(client, command, waitHandle, false)
         {
         }
 
         /// <summary>
-   /// Instantiates a new instance of SynchronousResponseProcessor for the specified SoundbridgeClient and command, indicating whether or not the results will be a list and if so, what error values to look out for.
-   /// </summary>
-   /// <param name="client"></param>
-   /// <param name="command"></param>
-   /// <param name="waithandle"></param>
-   /// <param name="isList"></param>
-   /// <remarks></remarks>
+        /// Instantiates a new instance of SynchronousResponseProcessor for the specified SoundbridgeClient and command, indicating whether or not the results will be a list and if so, what error values to look out for.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="command"></param>
+        /// <param name="waithandle"></param>
+        /// <param name="isList"></param>
+        /// <remarks></remarks>
         public SynchronousResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waithandle, bool isList) : base(client, command, waithandle)
         {
             _isList = isList;
         }
 
         /// <summary>
-   /// Gets whether the command will return a list or not
-   /// </summary>
-   /// <value></value>
-   /// <returns></returns>
-   /// <remarks></remarks>
+        /// Gets whether the command will return a list or not
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public bool IsList
         {
             get
@@ -51,10 +51,10 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-   /// Processes the specified response line.
-   /// </summary>
-   /// <param name="response"></param>
-   /// <remarks></remarks>
+        /// Processes the specified response line.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <remarks></remarks>
         public override void Process(string response)
         {
             if (response.StartsWith("ListResultSize"))

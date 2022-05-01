@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixa.Soundbridge", "src\Pix
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sbsh", "src\sbsh\sbsh.csproj", "{22663902-7F22-411E-B035-0C86FBD41DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixa.Soundbridge.Tests", "tests\Pixa.Soundbridge.Tests\Pixa.Soundbridge.Tests.csproj", "{F017C6E4-2379-43CC-8403-2FC57FE661FC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +29,6 @@ Global
 		{22663902-7F22-411E-B035-0C86FBD41DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22663902-7F22-411E-B035-0C86FBD41DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22663902-7F22-411E-B035-0C86FBD41DE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F017C6E4-2379-43CC-8403-2FC57FE661FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F017C6E4-2379-43CC-8403-2FC57FE661FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F017C6E4-2379-43CC-8403-2FC57FE661FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F017C6E4-2379-43CC-8403-2FC57FE661FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

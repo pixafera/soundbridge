@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class IRCommandStringAttribute : Attribute

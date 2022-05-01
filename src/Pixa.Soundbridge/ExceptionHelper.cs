@@ -1,5 +1,4 @@
-﻿
-namespace Pixa.Soundbridge.Library
+﻿namespace Pixa.Soundbridge
 {
     internal static class ExceptionHelper
     {

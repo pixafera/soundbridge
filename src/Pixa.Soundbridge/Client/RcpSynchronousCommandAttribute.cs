@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
     /// <summary>
-/// Provides metadata about synchronous RCP commands.
-/// </summary>
-/// <remarks></remarks>
+    /// Provides metadata about synchronous RCP commands.
+    /// </summary>
+    /// <remarks></remarks>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public sealed class RcpSynchronousCommandAttribute : RcpCommandAttribute
     {
@@ -29,12 +29,12 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Creates an instance of <see cref="IResponseProcessor"/> capable of deal with the responses of an RCP server to synchronous commands.
-    /// </summary>
-    /// <param name="client"></param>
-    /// <param name="waitHandle"></param>
-    /// <returns></returns>
-    /// <remarks></remarks>
+        /// Creates an instance of <see cref="IResponseProcessor"/> capable of deal with the responses of an RCP server to synchronous commands.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="waitHandle"></param>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public override IResponseProcessor CreateResponseProcessor(TcpSoundbridgeClient client, System.Threading.EventWaitHandle waitHandle)
         {
             return new SynchronousResponseProcessor(client, Command, waitHandle, _isList);

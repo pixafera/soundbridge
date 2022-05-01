@@ -1,32 +1,32 @@
 ﻿using System.Threading;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
 
     /// <summary>
-/// Processes responses for transacted RCP methods.
-/// </summary>
-/// <remarks></remarks>
+    /// Processes responses for transacted RCP methods.
+    /// </summary>
+    /// <remarks></remarks>
     internal class TransactedResponseProcessor : ResponseProcessorBase
     {
         private TransactionStatus _status = TransactionStatus.Pending;
 
         /// <summary>
-    /// Instantiates a new instance of ResponseProcessorBase for the specified SoundbridgeClient and EventWaitHandle.
-    /// </summary>
-    /// <param name="client"></param>
-    /// <param name="waitHandle"></param>
-    /// <remarks></remarks>
+        /// Instantiates a new instance of ResponseProcessorBase for the specified SoundbridgeClient and EventWaitHandle.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="waitHandle"></param>
+        /// <remarks></remarks>
         public TransactedResponseProcessor(TcpSoundbridgeClient client, string command, EventWaitHandle waitHandle) : base(client, command, waitHandle)
         {
         }
 
         /// <summary>
-    /// Gets the status of the transaction.
-    /// </summary>
-    /// <value></value>
-    /// <returns></returns>
-    /// <remarks>If the transaction was not initiated, this usually indicates an error.</remarks>
+        /// Gets the status of the transaction.
+        /// </summary>
+        /// <value></value>
+        /// <returns></returns>
+        /// <remarks>If the transaction was not initiated, this usually indicates an error.</remarks>
         public TransactionStatus Status
         {
             get
@@ -36,10 +36,10 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Processes the specified response line.
-    /// </summary>
-    /// <param name="response"></param>
-    /// <remarks></remarks>
+        /// Processes the specified response line.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <remarks></remarks>
         public override void Process(string response)
         {
             if (response == "TransactionInitiated")

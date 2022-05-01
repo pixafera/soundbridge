@@ -5,15 +5,14 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Microsoft.VisualBasic;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
 
     /// <summary>
-/// A class for interacting with Soundbridges and other RCP compliant devices.
-/// </summary>
-/// <remarks></remarks>
+    /// A class for interacting with Soundbridges and other RCP compliant devices.
+    /// </summary>
+    /// <remarks></remarks>
     public class TcpSoundbridgeClient : ISoundbridgeClient, IDisposable
     {
         private TcpClient _client;
@@ -21,29 +20,29 @@ namespace Pixa.Soundbridge.Library
 
         #region  Constructors 
         /// <summary>
-   /// Creates a new SoundbridgeClient connected to the specified IPEndPoint.
-   /// </summary>
-   /// <param name="localEP"></param>
-   /// <remarks></remarks>
+        /// Creates a new SoundbridgeClient connected to the specified IPEndPoint.
+        /// </summary>
+        /// <param name="localEP"></param>
+        /// <remarks></remarks>
         public TcpSoundbridgeClient(IPEndPoint localEP) : this(new TcpClient(localEP))
         {
         }
 
         /// <summary>
-   /// Creates a new SoundbridgeClient connect to the specified host.
-   /// </summary>
-   /// <param name="hostname"></param>
-   /// <remarks></remarks>
+        /// Creates a new SoundbridgeClient connect to the specified host.
+        /// </summary>
+        /// <param name="hostname"></param>
+        /// <remarks></remarks>
         public TcpSoundbridgeClient(string hostname) : this(hostname, 5555)
         {
         }
 
         /// <summary>
-   /// Creates a new SoundbridgeClient connected to the specified host and port.
-   /// </summary>
-   /// <param name="hostname"></param>
-   /// <param name="port"></param>
-   /// <remarks></remarks>
+        /// Creates a new SoundbridgeClient connected to the specified host and port.
+        /// </summary>
+        /// <param name="hostname"></param>
+        /// <param name="port"></param>
+        /// <remarks></remarks>
         public TcpSoundbridgeClient(string hostname, int port) : this(new TcpClient(hostname, port))
         {
         }

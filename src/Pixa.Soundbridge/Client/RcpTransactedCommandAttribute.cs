@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
 
-namespace Pixa.Soundbridge.Library
+namespace Pixa.Soundbridge.Client
 {
 
     /// <summary>
-/// Contains metadata about Transacted RCP commands.
-/// </summary>
-/// <remarks></remarks>
+    /// Contains metadata about Transacted RCP commands.
+    /// </summary>
+    /// <remarks></remarks>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public sealed class RcpTransactedCommandAttribute : RcpCommandAttribute
     {

@@ -1,5 +1,4 @@
-﻿
-namespace Pixa.Soundbridge.Library
+﻿namespace Pixa.Soundbridge.Client
 {
     public class RcpCommandReceivingProgressEventArgs : RcpCommandProgressEventArgs
     {
@@ -21,11 +20,11 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Gets the progress of the transaction
-    /// </summary>
-    /// <value></value>
-    /// <returns>The progress of the transaction, or -1 if this data was not sent.</returns>
-    /// <remarks></remarks>
+        /// Gets the progress of the transaction
+        /// </summary>
+        /// <value></value>
+        /// <returns>The progress of the transaction, or -1 if this data was not sent.</returns>
+        /// <remarks></remarks>
         public int Progress
         {
             get
@@ -35,11 +34,11 @@ namespace Pixa.Soundbridge.Library
         }
 
         /// <summary>
-    /// Gets the total size of the transaction being executed.
-    /// </summary>
-    /// <value></value>
-    /// <returns>The total size of the transaction being executed, or -1 if this data was not sent.</returns>
-    /// <remarks></remarks>
+        /// Gets the total size of the transaction being executed.
+        /// </summary>
+        /// <value></value>
+        /// <returns>The total size of the transaction being executed, or -1 if this data was not sent.</returns>
+        /// <remarks></remarks>
         public int Total
         {
             get

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using Microsoft.VisualBasic;
 
 namespace Pixa.Soundbridge.Shell
 {
@@ -21,7 +20,7 @@ namespace Pixa.Soundbridge.Shell
                 input = Console.ReadLine();
                 if (input == "exit")
                     return;
-                sw.Write(input + Constants.vbCrLf);
+                sw.Write(input + "\r\n");
                 sw.Flush();
                 if (!_client.Connected)
                     return;
