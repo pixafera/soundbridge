@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Pixa.Soundbridge.Client;
+using System.Net;
 
 namespace Pixa.Soundbridge {
     public static class SoundbridgeFactory {

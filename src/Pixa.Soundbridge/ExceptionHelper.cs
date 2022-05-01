@@ -1,4 +1,6 @@
-﻿namespace Pixa.Soundbridge {
+﻿using Pixa.Soundbridge.Client;
+
+namespace Pixa.Soundbridge {
     internal static class ExceptionHelper {
         public static void ThrowUnexpectedPreamble(string preamble) {
             throw new SoundbridgeClientException(string.Format("The specified end point does not appear to be a soundbridge or RCP compliant device.  Expected 'roku:ready', found '{0}'", preamble));
